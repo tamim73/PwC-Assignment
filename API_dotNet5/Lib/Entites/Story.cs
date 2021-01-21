@@ -1,8 +1,7 @@
-﻿using Lib.Entites;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Data.Entites
+namespace Lib.Entites
 {
     public class Story: BaseEntity
     {
