@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +9,26 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public loader: LoadingBarService, private router: Router) {}
+  constructor(
+    public loader: LoadingBarService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
   isAdmin() {
-    return true;
+    return this.authService.isAdmin();
   }
   isLoggedIn() {
-    return true;
+    return this.authService.isLoggedIn();
   }
   getName(): string {
-    return 'Tamim';
+    return this.authService.loggedInAs();
   }
-  login() {}
+  login() {
+    if (this.isLoggedIn()) {
+      this.authService.logout();
+    } else {
+      this.router.navigate(['auth/login']);
+    }
+  }
 }

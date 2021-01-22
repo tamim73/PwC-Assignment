@@ -1,0 +1,45 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+
+    <h2 class="text-muted pt-sm-5">Register</h2>
+
+    <!-- register form -->
+    <form class="fs-1"
+          style="max-width: 450px;"
+          (ngSubmit)="onRegisterClick()"
+          [formGroup]="registerFG">
+
+        <ng-container *ngFor="let field of fields">
+
+            <mat-form-field appearance="fill" class="w-100 p-3">
+                <mat-label>{{field.label}}
+                    <span *ngIf="field.errors['required']" class="text-danger">*</span>
+                </mat-label>
+                <input matInput
+                       [placeholder]="field.placeholder || ''"
+                       [formControlName]="field.name"
+                       [type]="field.type">
+                <mat-error>{{getErrorMessage(field.name)}}</mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <mat-checkbox formControlName="isAdmin" class="mx-3 mb-5">Register as an Administrator</mat-checkbox>
+
+
+        <div class="text-center m-2">
+            <button mat-raised-button
+                    [disabled]="authService.loading$ | async"
+                    type="submit" color="primary"
+                    class="w-75 py-2">
+                Register
+                <!-- spinner -->
+                <mat-icon>
+                    <mat-spinner color="primary" class="ml-auto" diameter="20"></mat-spinner>
+                </mat-icon>
+            </button>
+            <div class="p-3 text-muted fs085">Already have an account?
+                <a [routerLink]="['/auth/login']">Login</a>
+            </div>
+        </div>
+
+    </form>
+</div>
