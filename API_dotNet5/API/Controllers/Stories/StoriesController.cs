@@ -112,13 +112,14 @@ namespace API.Controllers.Stories
         [HttpPut("{id}")]
         public async Task<ActionResult<EditStoryResponse>> Put(int id, [FromBody] EditStoryRequest request)
         {
+            if (id != request.Id) return BadRequest(new EditStoryResponse { Message = "Id does not match", HasError = true });
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             int.TryParse(User.FindFirst(ClaimTypes.Name).Value, out int userId);
             if (userId == 0) return Unauthorized();
 
             string userRole = User.FindFirst(ClaimTypes.Role).Value;
 
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (id != request.Id) return BadRequest(new EditStoryResponse { Message = "Id does not match", HasError = true });
 
             Story story = await dbContext.Stories.Include(x => x.Topic).FirstOrDefaultAsync(x => x.Id == id);
 
@@ -136,7 +137,7 @@ namespace API.Controllers.Stories
             {
                 dbContext.Entry(story).State = EntityState.Modified;
                 await dbContext.SaveChangesAsync();
-                return Ok(new EditStoryResponse { Message = "Employee updated successfully" });
+                return Ok(new EditStoryResponse { Message = "Story updated successfully" });
             }
             catch (DbUpdateConcurrencyException)
             {

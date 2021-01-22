@@ -15,5 +15,8 @@ namespace Lib.Entites
 
         public ApplicationUser Author { get; set; }
 
+        public int StoryId { get; set; }
+        public Story Story { get; set; }
+
     }
 }
