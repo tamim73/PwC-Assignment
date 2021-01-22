@@ -45,6 +45,7 @@ namespace API.Controllers.Stories
                .Include(x => x.Topic).ThenInclude(x => x.Author)
                .Select(story => new StoriesListModel
                {
+                   Id = story.Id,
                    Title = story.Topic.Title,
                    Description = story.Topic.Description,
                    AuthorName = story.Topic.Author.Name,
@@ -62,11 +63,11 @@ namespace API.Controllers.Stories
         // GET api/<StoriesController>/5
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Story>> Get(int id)
+        public async Task<ActionResult<StoryDetailsRespone>> Get(int id)
         {
             var story = await dbContext.Stories
                 .Include(x => x.Topic).ThenInclude(x => x.Author)
-                .Include(x => x.Posts)
+                .Include(x => x.Posts).ThenInclude(x => x.Author)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (story == null)
@@ -74,7 +75,25 @@ namespace API.Controllers.Stories
                 return NotFound();
             }
 
-            return story;
+            return new StoryDetailsRespone
+            {
+                Id = story.Id,
+                Title = story.Topic.Title,
+                Description = story.Topic.Description,
+                Content = story.Topic.Content,
+                AuthorId = story.Topic.AuthorId,
+                AuthorName = story.Topic.Author.Name,
+                CreationDateTime = story.CreationDateTime,
+                Posts = story.Posts.Select(x => new StoryPostItem
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Content = x.Content,
+                    CreationDateTime = x.CreationDateTime,
+                    AuthorId = x.AuthorId,
+                    AuthorName = x.Author.Name
+                }).ToList()
+            };
         }
 
         // POST api/<StoriesController>

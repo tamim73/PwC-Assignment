@@ -12,6 +12,7 @@ namespace API.Controllers.Stories
 
     public class StoriesListModel
     {
+        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
