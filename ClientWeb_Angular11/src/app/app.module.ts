@@ -17,6 +17,8 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { ErrorInterceptorService } from './core/services/error-interceptor.service';
 import { PagesComponent } from './pages/pages.component';
 import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { StoriesListComponent } from './pages/stories/stories-list/stories-list.
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    LoadingBarModule,
+    LoadingBarRouterModule,
 
     MatToolbarModule,
     MatProgressBarModule,
