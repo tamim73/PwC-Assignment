@@ -23,6 +23,17 @@ namespace API.Context
         {
             modelBuilder.HasDefaultSchema("Assignment");
 
+
+            modelBuilder.Entity<Story>()
+                .HasOne<Post>(s => s.Topic)
+                .WithOne(g => g.TopicForStory)
+                .HasForeignKey<Post>(s => s.TopicForStoryId);
+
+            modelBuilder.Entity<Post>()
+               .HasOne<Story>(s => s.PostForStory)
+               .WithMany(g => g.Posts)
+               .HasForeignKey(s => s.PostForStoryId);
+
             #region Seeding
             // admin user
             modelBuilder.Entity<ApplicationUser>().HasData(

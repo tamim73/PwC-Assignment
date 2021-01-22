@@ -29,6 +29,21 @@ namespace API.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stories",
+                schema: "Assignment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TopicId = table.Column<int>(type: "int", nullable: false),
+                    CreationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 schema: "Assignment",
                 columns: table => new
@@ -37,8 +52,11 @@ namespace API.Context.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
-                    StoryId = table.Column<int>(type: "int", nullable: true),
+                    IsTopic = table.Column<bool>(type: "bit", nullable: false),
+                    TopicForStoryId = table.Column<int>(type: "int", nullable: true),
+                    PostForStoryId = table.Column<int>(type: "int", nullable: true),
                     CreationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -51,37 +69,27 @@ namespace API.Context.Migrations
                         principalTable: "ApplicationUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stories",
-                schema: "Assignment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TopicId = table.Column<int>(type: "int", nullable: false),
-                    CreationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stories_Posts_TopicId",
-                        column: x => x.TopicId,
+                        name: "FK_Posts_Stories_PostForStoryId",
+                        column: x => x.PostForStoryId,
                         principalSchema: "Assignment",
-                        principalTable: "Posts",
+                        principalTable: "Stories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Posts_Stories_TopicForStoryId",
+                        column: x => x.TopicForStoryId,
+                        principalSchema: "Assignment",
+                        principalTable: "Stories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 schema: "Assignment",
                 table: "ApplicationUsers",
                 columns: new[] { "Id", "CreationDateTime", "Name", "Password", "Role", "Username" },
-                values: new object[] { 1, new DateTime(2021, 1, 22, 0, 28, 38, 797, DateTimeKind.Local).AddTicks(1588), "System Administrator", "AFNMjEQsD+iKDUfUsQDBNX64Z5k9A0jRYKCY/BVmKaVPhBNg", "Admin", "sysadmin" });
+                values: new object[] { 1, new DateTime(2021, 1, 22, 18, 41, 10, 998, DateTimeKind.Local).AddTicks(3834), "System Administrator", "7X+n5MaAc0iBmmbis0q/TC4Ji019t+04rHyMveqyGqLuxD6s", "Admin", "sysadmin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",
@@ -90,39 +98,25 @@ namespace API.Context.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_StoryId",
+                name: "IX_Posts_PostForStoryId",
                 schema: "Assignment",
                 table: "Posts",
-                column: "StoryId");
+                column: "PostForStoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stories_TopicId",
-                schema: "Assignment",
-                table: "Stories",
-                column: "TopicId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Posts_Stories_StoryId",
+                name: "IX_Posts_TopicForStoryId",
                 schema: "Assignment",
                 table: "Posts",
-                column: "StoryId",
-                principalSchema: "Assignment",
-                principalTable: "Stories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                column: "TopicForStoryId",
+                unique: true,
+                filter: "[TopicForStoryId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Posts_ApplicationUsers_AuthorId",
-                schema: "Assignment",
-                table: "Posts");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Posts_Stories_StoryId",
-                schema: "Assignment",
-                table: "Posts");
+            migrationBuilder.DropTable(
+                name: "Posts",
+                schema: "Assignment");
 
             migrationBuilder.DropTable(
                 name: "ApplicationUsers",
@@ -130,10 +124,6 @@ namespace API.Context.Migrations
 
             migrationBuilder.DropTable(
                 name: "Stories",
-                schema: "Assignment");
-
-            migrationBuilder.DropTable(
-                name: "Posts",
                 schema: "Assignment");
         }
     }

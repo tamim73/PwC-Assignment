@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Context.Migrations
 {
     [DbContext(typeof(AssignmentDbContext))]
-    [Migration("20210121222839_i")]
+    [Migration("20210122164111_i")]
     partial class i
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,9 +56,9 @@ namespace API.Context.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDateTime = new DateTime(2021, 1, 22, 0, 28, 38, 797, DateTimeKind.Local).AddTicks(1588),
+                            CreationDateTime = new DateTime(2021, 1, 22, 18, 41, 10, 998, DateTimeKind.Local).AddTicks(3834),
                             Name = "System Administrator",
-                            Password = "AFNMjEQsD+iKDUfUsQDBNX64Z5k9A0jRYKCY/BVmKaVPhBNg",
+                            Password = "7X+n5MaAc0iBmmbis0q/TC4Ji019t+04rHyMveqyGqLuxD6s",
                             Role = "Admin",
                             Username = "sysadmin"
                         });
@@ -81,18 +81,31 @@ namespace API.Context.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("StoryId")
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsTopic")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PostForStoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TopicForStoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("StoryId");
+                    b.HasIndex("PostForStoryId");
+
+                    b.HasIndex("TopicForStoryId")
+                        .IsUnique()
+                        .HasFilter("[TopicForStoryId] IS NOT NULL");
 
                     b.ToTable("Posts");
                 });
@@ -107,20 +120,10 @@ namespace API.Context.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TopicId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
 
                     b.ToTable("Stories");
                 });
@@ -133,27 +136,26 @@ namespace API.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lib.Entites.Story", null)
+                    b.HasOne("Lib.Entites.Story", "PostForStory")
                         .WithMany("Posts")
-                        .HasForeignKey("StoryId");
+                        .HasForeignKey("PostForStoryId");
+
+                    b.HasOne("Lib.Entites.Story", "TopicForStory")
+                        .WithOne("Topic")
+                        .HasForeignKey("Lib.Entites.Post", "TopicForStoryId");
 
                     b.Navigation("Author");
-                });
 
-            modelBuilder.Entity("Lib.Entites.Story", b =>
-                {
-                    b.HasOne("Lib.Entites.Post", "Topic")
-                        .WithMany()
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PostForStory");
 
-                    b.Navigation("Topic");
+                    b.Navigation("TopicForStory");
                 });
 
             modelBuilder.Entity("Lib.Entites.Story", b =>
                 {
                     b.Navigation("Posts");
+
+                    b.Navigation("Topic");
                 });
 #pragma warning restore 612, 618
         }
