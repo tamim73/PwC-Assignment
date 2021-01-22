@@ -2,7 +2,7 @@
 
 namespace Lib.Models
 {
-    public class SearchBatch
+    public class PageBatch
     {
         public int PageSize { get; set; }
         public int PageNo { get; set; }

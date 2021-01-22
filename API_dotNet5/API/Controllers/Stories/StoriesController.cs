@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Context;
+using Lib.Entites;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,17 +8,25 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace API.Controllers
+namespace API.Controllers.Stories
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StoriesController : ControllerBase
     {
+
+        private AssignmentDbContext dbContext;
+
+        public StoriesController(AssignmentDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         // GET: api/<StoriesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public Task<ActionResult> SearchStories()
         {
-            return new string[] { "value1", "value2" };
+            return null;
         }
 
         // GET api/<StoriesController>/5

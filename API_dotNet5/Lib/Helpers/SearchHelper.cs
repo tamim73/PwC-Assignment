@@ -7,7 +7,7 @@ namespace Lib.Helpers
 {
     public class SearchHelper
     {
-        public static IQueryable<T> QuerySearchBatch<T>(IQueryable<T> queryablle, SearchBatch searchBatch)
+        public static IQueryable<T> QuerySearchBatch<T>(IQueryable<T> queryablle, PageBatch searchBatch)
         {
             if (searchBatch.PageNo == 0)
                 searchBatch.PageNo = 1;

@@ -1,6 +1,6 @@
 ﻿using Lib.Models;
 
-namespace Lib.DTO
+namespace API.Controllers.Auth
 {
     public class LoginResponseDTO : BaseResponse
     {
