@@ -15,11 +15,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { ErrorInterceptorService } from './core/services/error-interceptor.service';
+import { PagesComponent } from './pages/pages.component';
+import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PagesComponent,
+    StoriesListComponent
   ],
   imports: [
     BrowserModule,

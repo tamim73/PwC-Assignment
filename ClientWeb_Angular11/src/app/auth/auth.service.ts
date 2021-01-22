@@ -132,6 +132,6 @@ export class AuthService {
     this._isAdmin = false;
     this._loggedInAs = '';
     this._loggedInId = 0;
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['']);
   }
 }
