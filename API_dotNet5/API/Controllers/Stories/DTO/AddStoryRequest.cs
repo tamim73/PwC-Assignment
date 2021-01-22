@@ -4,17 +4,15 @@ namespace API.Controllers.Stories
 {
     public class AddStoryRequest
     {
-        [Required]
-        public string StoryTitle { get; set; }
 
         [Required]
-        public string StoryDescription { get; set; }
+        public string Title { get; set; }
 
         [Required]
-        public string TopicTitle { get; set; }
+        public string Content { get; set; }
 
         [Required]
-        public string TopicContent { get; set; }
+        public string Description { get; set; }
 
     }
 }

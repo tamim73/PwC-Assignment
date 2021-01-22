@@ -5,13 +5,6 @@ namespace Lib.Entites
 {
     public class Story: BaseEntity
     {
-        [Required]
-        public string Title { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
-        public string OrginalAuthorName { get; set; }
 
         public int TopicId { get; set; }
 

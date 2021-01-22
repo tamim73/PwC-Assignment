@@ -34,19 +34,20 @@ namespace API.Controllers.Stories
                .Where(story =>
                    // general search 
                    string.IsNullOrEmpty(request.General) ||
-                       story.Title.Contains(request.General) ||
-                       story.Description.Contains(request.General) ||
+                       story.Topic.Title.Contains(request.General) ||
+                       story.Topic.Description.Contains(request.General) ||
                        story.Topic.Author.Name.Contains(request.General)
                    );
 
             int count = storiesQueryable.Count();
 
             var result = await SearchHelper.QuerySearchBatch(storiesQueryable, batch)
+               .Include(x => x.Topic).ThenInclude(x => x.Author)
                .Select(story => new StoriesListModel
                {
-                   Title = story.Title,
-                   Description = story.Description,
-                   AuthorName = story.OrginalAuthorName,
+                   Title = story.Topic.Title,
+                   Description = story.Topic.Description,
+                   AuthorName = story.Topic.Author.Name,
                    CreationDateTime = story.CreationDateTime
                })
                .ToListAsync();
@@ -86,12 +87,11 @@ namespace API.Controllers.Stories
 
             Story story = new Story()
             {
-                Title = request.StoryTitle.Trim(),
-                Description = request.StoryDescription.Trim(),
                 Topic = new Post
                 {
-                    Title = request.TopicTitle.Trim(),
-                    Content = request.TopicContent,
+                    Title = request.Title.Trim(),
+                    Description = request.Description.Trim(),
+                    Content = request.Content,
                     AuthorId = userId,
                 },
             };
@@ -123,15 +123,14 @@ namespace API.Controllers.Stories
             Story story = await dbContext.Stories.Include(x => x.Topic).FirstOrDefaultAsync(x => x.Id == id);
 
             if (story == null) return NotFound(new EditStoryResponse { Message = "Story does not exist", HasError = true });
-            
+
             // if user is not the story author or the user is not an admin
-            if (story.Topic.AuthorId != userId || userRole != UserRole.Admin) 
+            if (story.Topic.AuthorId != userId || userRole != UserRole.Admin)
                 return Unauthorized(new EditStoryResponse { Message = "You do no t have permissions to edit this story", HasError = true });
-            
-            story.Title = request.StoryTitle.Trim();
-            story.Description = request.StoryDescription.Trim();
-            story.Topic.Title = request.TopicTitle.Trim();
-            story.Topic.Content = request.TopicContent;
+
+            story.Topic.Title = request.Title.Trim();
+            story.Topic.Description = request.Description.Trim();
+            story.Topic.Content = request.Content;
 
             try
             {

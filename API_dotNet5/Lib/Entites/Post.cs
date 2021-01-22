@@ -9,6 +9,7 @@ namespace Lib.Entites
 
         [Required]
         public string Content { get; set; }
+        public string Description { get; set; }
 
         public int AuthorId { get; set; }
 
