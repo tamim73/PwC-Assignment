@@ -11,3 +11,12 @@
 @import "./assets/scss/init.scss";
 @import "./assets/scss/material-theme.scss";
 @import "./assets/scss/helpers.scss";
+
+
+body {
+    background-color: whitesmoke;
+}
+
+.mat-toolbar {
+    background-color: #fff !important;
+}

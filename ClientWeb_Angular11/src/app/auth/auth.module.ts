@@ -46,8 +46,8 @@ const routes: Routes = [
      // material
      MatIconModule,
      MatFormFieldModule,
-     MatProgressSpinnerModule,
      MatInputModule,
+     MatProgressSpinnerModule,
      MatButtonModule,
      MatCheckboxModule
   ]

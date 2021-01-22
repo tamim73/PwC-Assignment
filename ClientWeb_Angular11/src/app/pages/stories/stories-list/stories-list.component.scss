@@ -1,0 +1,23 @@
+
+.story-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.story-card {
+    margin: 10px;
+    width: 300px;
+    min-height: 200px;
+
+    mat-card-content p {
+        text-align: justify;
+    }
+}
+
+.paginator-wrapper {
+    padding-top: 30px;
+    mat-paginator {
+        background-color: #fff;
+    }
+}

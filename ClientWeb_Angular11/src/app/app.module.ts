@@ -19,6 +19,10 @@ import { PagesComponent } from './pages/pages.component';
 import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import {MatCardModule} from '@angular/material/card';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -41,6 +45,10 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     MatSnackBarModule,
     MatMenuModule,
     MatIconModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     {
