@@ -1,0 +1,120 @@
+/////////////////////
+// ::: HELPERS ::: //
+/////////////////////
+.pointer {
+  cursor: pointer;
+}
+
+.frame {
+  box-shadow: 0 0 13px 0 rgba(81, 73, 90, 0.103);
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.busy {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+// font weight
+.fw-100 {
+  font-weight: 100;
+}
+.fw-200 {
+  font-weight: 200;
+}
+.fw-300 {
+  font-weight: 300;
+}
+.fw-400 {
+  font-weight: 400;
+}
+.fw-450 {
+  font-weight: 450;
+}
+.fw-475 {
+  font-weight: 475;
+}
+.fw-500 {
+  font-weight: 500;
+}
+.fw-550 {
+  font-weight: 550;
+}
+.fw-575 {
+  font-weight: 575;
+}
+.fw-600 {
+  font-weight: 600;
+}
+.fw-650 {
+  font-weight: 650;
+}
+.fw-700 {
+  font-weight: 700;
+}
+
+// font size
+.fs-025 {
+  font-size: 0.25rem;
+}
+.fs-05 {
+  font-size: 0.5rem;
+}
+.fs-075 {
+  font-size: 0.75rem;
+}
+.fs-085 {
+  font-size: 0.85rem;
+}
+.fs-09 {
+  font-size: 0.9rem;
+}
+.fs095 {
+  font-size: 0.95rem;
+}
+.fs-1 {
+  font-size: 1rem;
+}
+.fs-115 {
+  font-size: 1.15rem;
+}
+.fs-125 {
+  font-size: 1.25rem;
+}
+.fs-135 {
+  font-size: 1.35rem;
+}
+.fs-145 {
+  font-size: 1.45rem;
+}
+.fs-15 {
+  font-size: 1.5rem;
+}
+.fs-175 {
+  font-size: 1.75rem;
+}
+.fs-2 {
+  font-size: 2rem;
+}
+.fs-25 {
+  font-size: 2.5rem;
+}
+.fs-275 {
+  font-size: 2.75rem;
+}
+.fs-3 {
+  font-size: 3rem;
+}
+.fs-4 {
+  font-size: 4rem;
+}
+.fs-5 {
+  font-size: 5rem;
+}
+.fs-6 {
+  font-size: 7rem;
+}
+.fs-7 {
+  font-size: 9rem;
+}
