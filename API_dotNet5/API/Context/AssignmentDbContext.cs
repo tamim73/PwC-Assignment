@@ -30,7 +30,6 @@ namespace API.Context
                 {
                     Id = 1,
                     Name = "System Administrator",
-                    CreationDateTime = DateTime.Now,
                     Username = "sysadmin",
                     Password = CryptoHelper.HashPassword("p@ssw0rd"),
                     Role = UserRole.Admin

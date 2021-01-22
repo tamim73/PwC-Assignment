@@ -1,5 +1,4 @@
 ﻿using API.Context;
-using Lib.DTO;
 using Lib.Entites;
 using Lib.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +69,6 @@ namespace API.Controllers.Auth
                 // Ideally only admins can register new admins
                 Role = registerModel.Role,
 
-                CreationDateTime = DateTime.Now,
                 Password = CryptoHelper.HashPassword(registerModel.Password)
             };
 

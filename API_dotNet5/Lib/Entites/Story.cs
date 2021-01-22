@@ -11,6 +11,8 @@ namespace Lib.Entites
         [Required]
         public string Description { get; set; }
 
+        public string OrginalAuthorName { get; set; }
+
         public int TopicId { get; set; }
 
         public Post Topic { get; set; }

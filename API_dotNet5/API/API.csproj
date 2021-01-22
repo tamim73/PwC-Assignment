@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Posts\DTO\" />
-    <Folder Include="Controllers\Stories\DTO\" />
   </ItemGroup>
 
 </Project>
