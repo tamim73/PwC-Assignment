@@ -26,10 +26,10 @@
 
 
         <div class="text-center m-2">
-            <button mat-raised-button
+            <button mat-flat-button
                     [disabled]="authService.loading$ | async"
                     type="submit" color="primary"
-                    class="w-75 py-2">
+                    class="w-75 py-2 border">
                 Register
                 <!-- spinner -->
                 <mat-icon>
@@ -37,7 +37,7 @@
                 </mat-icon>
             </button>
             <div class="p-3 text-muted fs085">Already have an account?
-                <a [routerLink]="['/auth/login']">Login</a>
+                <a mat-button color="primary" [routerLink]="['/auth/login']">Login</a>
             </div>
         </div>
 
