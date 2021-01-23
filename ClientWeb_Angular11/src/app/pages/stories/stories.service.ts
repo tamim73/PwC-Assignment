@@ -131,6 +131,9 @@ export class StoriesService {
     });
   }
 
+  refreshSelectedStory(): void {
+    this.getStory(this.state?.selectedStory?.id);
+  }
   /* ---------------------------------- posts --------------------------------- */
 
   getPost(id: number): void {
@@ -141,16 +144,13 @@ export class StoriesService {
 
   addPost(req: AddPostRequest, redirect: boolean = true): void {
     this.addPost$(req).subscribe((res) => {
-      // ...
-      if (redirect) {
-        this.getStory(req.storyId, true);
-      }
+      this.refreshSelectedStory();
     });
   }
 
   editPost(req: EditPostRequest): void {
     this.editPost$(req).subscribe((res) => {
-      // ...
+      this.refreshSelectedStory();
     });
   }
 
