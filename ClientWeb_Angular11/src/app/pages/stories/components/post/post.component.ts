@@ -21,7 +21,6 @@ export class PostComponent implements OnInit {
   canEdit: boolean;
 
   ngOnInit(): void {
-    console.log(this.post);
     this.canEdit = this.checkCanEdit();
   }
 
@@ -48,8 +47,6 @@ export class PostComponent implements OnInit {
   }
 
   checkCanEdit(): boolean {
-    console.log(this.authService.isAdmin(), this.authService.getUserId(), this.post?.authorId);
-
     return (
       this.authService.isAdmin() ||
       this.authService.getUserId() === this.post?.authorId

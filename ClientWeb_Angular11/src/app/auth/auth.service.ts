@@ -58,7 +58,6 @@ export class AuthService {
       return;
     }
     const decodedToken = helper.decodeToken(token);
-    console.log(decodedToken);
     this._role =
       decodedToken[
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
@@ -71,9 +70,6 @@ export class AuthService {
     this._loggedInId = +decodedToken[
       'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
     ];
-    console.log(this._isAdmin);
-    console.log(this._loggedInAs);
-    console.log(this._loggedInId);
     this._isLoggedIn = true;
   }
 

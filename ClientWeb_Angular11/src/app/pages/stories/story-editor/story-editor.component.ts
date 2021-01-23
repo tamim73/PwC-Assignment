@@ -67,8 +67,6 @@ export class StoryEditorComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.storyFG.value);
-
     if (this.storyFG.invalid) {
       return;
     }
