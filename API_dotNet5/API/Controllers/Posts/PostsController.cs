@@ -44,7 +44,8 @@ namespace API.Controllers.Posts
             {
                 Id = post.Id,
                 Title = post.Title,
-                Contetnt = post.Content,
+                Description = post.Description,
+                Content = post.Content,
             });
         }
 

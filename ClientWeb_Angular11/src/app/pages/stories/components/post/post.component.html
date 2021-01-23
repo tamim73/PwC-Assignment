@@ -1,17 +1,34 @@
 <!-- mat-elevation-z0 border -->
 <mat-card class="post ">
-    <mat-card-header>
-        <mat-card-title>
-            {{post.title}}
-        </mat-card-title>
-        <mat-card-subtitle>By {{post.authorName}} <br> {{post.creationDateTime | date}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            {{post.description}}
-        </p>
 
-        <div class="post-content" [innerHTML]="post.content"></div>
-    </mat-card-content>
-
+    <ng-container *ngIf="isEditing; else elseTemplate">
+        <app-story-editor [type]="isTopic ? 'story': 'post'"></app-story-editor>
+        <button mat-button color="accent" (click)="cancelEdit()">
+            Cancel edit
+        </button>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <mat-card-header>
+            <mat-card-title>
+                {{post.title}}
+            </mat-card-title>
+            <mat-card-subtitle>By {{post.authorName}} <br> {{post.creationDateTime | date}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                {{post.description}}
+            </p>
+    
+            <div class="post-content" [innerHTML]="post.content"></div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button color="accent" (click)="edit()">
+                Edit
+            </button>
+            <button mat-button color="warn" (click)="delete()">
+                Delete
+            </button>
+        </mat-card-actions>
+    </ng-template>  
+  
 </mat-card>

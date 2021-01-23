@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { IPostBase } from '../../stories.DTO';
+import { StoriesService } from '../../stories.service';
 
 @Component({
   selector: 'app-post',
@@ -7,9 +9,47 @@ import { IPostBase } from '../../stories.DTO';
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private storiesService: StoriesService
+  ) {}
 
   @Input() post: IPostBase;
+  @Input() isTopic: boolean;
 
-  ngOnInit(): void {}
+  isEditing = false;
+  canEdit = this.checkCanEdit();
+
+  ngOnInit(): void {
+    console.log(this.post);
+  }
+
+  edit(): void {
+    if (this.canEdit) {
+      this.isEditing = true;
+    }
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+  }
+
+  delete(): void {
+    if (this.canEdit) {
+      if (confirm('Are you sure you ?')) {
+        if (this.isTopic) {
+          this.storiesService.deleteStory(this.post.id);
+        } else {
+          this.storiesService.deletePost(this.post.id);
+        }
+      }
+    }
+  }
+
+  checkCanEdit(): boolean {
+    return (
+      this.authService.isAdmin() ||
+      this.authService.getUserId() === this.post.authorId
+    );
+  }
 }

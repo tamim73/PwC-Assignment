@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AddPostRequest, AddStoryRequest } from '../stories.DTO';
+import { AddPostRequest, AddStoryRequest, EditPostRequest } from '../stories.DTO';
 import { StoriesService } from '../stories.service';
 
 @Component({
@@ -20,6 +20,8 @@ export class StoryEditorComponent implements OnInit {
   @Input() type: 'story' | 'post';
   @Input() mode: 'add' | 'edit';
 
+  @Output() submitted = new EventEmitter();
+
   // tinymce editor options
   editorOptions = {
     height: 500,
@@ -36,6 +38,7 @@ export class StoryEditorComponent implements OnInit {
   };
 
   storyFG = this.fb.group({
+    id: [''],
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
     content: ['', []],
@@ -50,7 +53,14 @@ export class StoryEditorComponent implements OnInit {
       this.mode = this.id ? 'edit' : 'add';
     }
     if (this.mode === 'edit') {
-      this.storiesService.getStory$(this.id).subscribe((res) => {});
+      this.storiesService.getPost$(this.id).subscribe((res) => {
+        this.storyFG.patchValue({
+          id: res.id,
+          title: res.title,
+          description: res.description,
+          content: res.content
+        });
+      });
     }
   }
 
@@ -61,24 +71,38 @@ export class StoryEditorComponent implements OnInit {
       return;
     }
 
-    const { title, description, content } = this.storyFG.value;
+    const { id, title, description, content  } = this.storyFG.value;
 
-    if (this.type === 'story') {
-      const req: AddStoryRequest = {
+    if (this.mode === 'add') {
+      if (this.type === 'story') {
+        const req: AddStoryRequest = {
+          title,
+          content,
+          description,
+        };
+        this.storiesService.addStory(req);
+      }
+      if (this.type === 'post') {
+        const req: AddPostRequest = {
+          title,
+          content,
+          description,
+          storyId: this.storyId,
+        };
+        this.storiesService.addPost(req);
+      }
+    }
+
+    if (this.mode === 'edit') {
+      const req: EditPostRequest = {
+        id,
         title,
         content,
         description,
       };
-      this.storiesService.addStory(req);
+      this.storiesService.editPost(req);
     }
-    if (this.type === 'post') {
-      const req: AddPostRequest = {
-        title,
-        content,
-        description,
-        storyId: this.storyId,
-      };
-      this.storiesService.addPost(req);
-    }
+
+    this.submitted.emit();
   }
 }

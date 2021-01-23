@@ -82,10 +82,11 @@ export class StoriesService {
         storiesList: res,
         storiesListLoading: false,
       });
+      
     });
   }
 
-  getStory(id: number): void {
+  getStory(id: number, redirect: boolean = true): void {
     this._state$.next({ ...this.state, selectedStoryLoading: true });
     this.getStory$(id).subscribe((res) => {
       this._state$.next({
@@ -93,6 +94,10 @@ export class StoriesService {
         selectedStory: res,
         selectedStoryLoading: false,
       });
+
+      if (redirect) {
+        this.router.navigate(['/pages/stories/view/' + id]);
+      }
     });
   }
 
@@ -120,6 +125,12 @@ export class StoriesService {
     });
   }
 
+  deleteStory(id: number): void {
+    this.deleteStory$(id).subscribe((res) => {
+      // ...
+    });
+  }
+
   /* ---------------------------------- posts --------------------------------- */
 
   getPost(id: number): void {
@@ -132,7 +143,7 @@ export class StoriesService {
     this.addPost$(req).subscribe((res) => {
       // ...
       if (redirect) {
-        this.router.navigate(['/pages/stories/view/' + req.storyId]);
+        this.getStory(req.storyId, true);
       }
     });
   }

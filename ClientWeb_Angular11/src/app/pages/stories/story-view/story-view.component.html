@@ -4,7 +4,7 @@
     <!--                                  story                                  -->
     <!-- ----------------------------------------------------------------------- -->
 
-    <app-post [post]="selectedStory"></app-post>
+    <app-post [post]="selectedStory" [isTopic]="true"></app-post>
 
     <mat-divider></mat-divider>
 
@@ -27,7 +27,8 @@
     </div>
     <app-story-editor
                       *ngIf="isAddPostToStoryVisible"
-                      [storyId]="selectedStory.id">
+                      [storyId]="selectedStory.id"
+                      (submitted)="hideAddPostToStory()">
     </app-story-editor>
 
     <!-- ----------------------------------------------------------------------- -->
@@ -38,7 +39,7 @@
 
         <mat-divider></mat-divider>
 
-        <app-post [post]="post"></app-post>
+        <app-post [post]="post" [isTopic]="false"></app-post>
 
     </ng-container>
 </ng-container>
