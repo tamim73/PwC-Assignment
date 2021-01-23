@@ -1,6 +1,8 @@
-﻿namespace API.Controllers.Stories
+﻿using Lib.Models;
+
+namespace API.Controllers.Stories
 {
-    public class SearchStoriesRequest
+    public class SearchStoriesRequest : PageBatch
     {
         public string General { get; set; }
     }

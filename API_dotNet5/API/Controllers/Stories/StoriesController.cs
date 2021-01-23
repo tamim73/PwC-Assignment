@@ -6,6 +6,7 @@ using Lib.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -25,10 +26,29 @@ namespace API.Controllers.Stories
             this.dbContext = dbContext;
         }
 
-        // GET: api/<StoriesController>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<SearchStoriesResponse>> Search([FromQuery] PageBatch batch, [FromQuery] SearchStoriesRequest request)
+        public async Task<ActionResult<List<StoriesListModel>>> GetAll()
+        {
+            List<StoriesListModel> allStories = await dbContext.Stories.Select(story => new StoriesListModel
+            {
+                Id = story.Id,
+                Title = story.Topic.Title,
+                Description = story.Topic.Description,
+                AuthorName = story.Topic.Author.Name,
+                CreationDateTime = story.CreationDateTime
+            })
+            .ToListAsync();
+
+            return Ok(allStories);
+        }
+
+        // GET: api/<StoriesController>
+        // server side pagination with filtering
+        // Didn't have time to implement this so I used get all
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<ActionResult<SearchStoriesResponse>> Search([FromQuery] SearchStoriesRequest request)
         {
             IQueryable<Story> storiesQueryable = dbContext.Stories
                .Where(story =>
@@ -41,7 +61,7 @@ namespace API.Controllers.Stories
 
             int count = storiesQueryable.Count();
 
-            var result = await SearchHelper.QuerySearchBatch(storiesQueryable, batch)
+            var result = await SearchHelper.QuerySearchBatch(storiesQueryable, request)
                .Include(x => x.Topic).ThenInclude(x => x.Author)
                .Select(story => new StoriesListModel
                {

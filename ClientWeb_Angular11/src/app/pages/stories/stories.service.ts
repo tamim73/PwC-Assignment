@@ -53,7 +53,17 @@ export class StoriesService {
   /*                                   Actions                                  */
   /* -------------------------------------------------------------------------- */
 
-  searchStories() {
+  getAllStories(): void {
+    this.getAllStories$().subscribe((res) => {
+      this._state.next({
+        ...this.state,
+        storiesList: res,
+      });
+    });
+  }
+
+  // did not have time to implement this
+  searchStories(): void {
     const { batch, general } = this.state;
     this.searchStories$({
       general,
@@ -71,6 +81,10 @@ export class StoriesService {
   /*                                     API                                    */
   /* -------------------------------------------------------------------------- */
 
+  getAllStories$(): Observable<StoriesListModel[]> {
+    return this.http.get<StoriesListModel[]>(this.storyEndPoint);
+  }
+
   searchStories$(req: SearchStoriesRequest): Observable<SearchStoriesResponse> {
     const params = {
       general: req.sortProperty,
@@ -79,7 +93,10 @@ export class StoriesService {
       sortOrder: req.sortOrder,
       sortProperty: req.sortProperty,
     };
-    return this.http.get<SearchStoriesResponse>(this.storyEndPoint, { params });
+    return this.http.get<SearchStoriesResponse>(
+      this.storyEndPoint + '/search',
+      { params }
+    );
   }
 
   getStory$(id: number): Observable<StoryDetailsResponse> {

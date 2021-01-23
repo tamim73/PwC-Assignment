@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoriesService } from '../stories.service';
 
 @Component({
   selector: 'app-stories-list',
@@ -6,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stories-list.component.scss'],
 })
 export class StoriesListComponent implements OnInit {
-  constructor() {}
+  constructor(private storiesService: StoriesService) {}
 
-  ngOnInit(): void {}
+  state$ = this.storiesService.state$;
 
- 
+  ngOnInit(): void {
+    this.storiesService.getAllStories();
+  }
 }
