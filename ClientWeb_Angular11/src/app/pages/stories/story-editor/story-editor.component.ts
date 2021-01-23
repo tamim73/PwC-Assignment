@@ -44,7 +44,7 @@ export class StoryEditorComponent implements OnInit {
   id = +this.route.snapshot.paramMap.get('id');
   ngOnInit(): void {
     if (!this.type) {
-      this.type = this.storyId ? 'post' : 'post';
+      this.type = this.storyId ? 'post' : 'story';
     }
     if (!this.mode) {
       this.mode = this.id ? 'edit' : 'add';

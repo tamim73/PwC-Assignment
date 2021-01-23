@@ -65,7 +65,7 @@ namespace API.Controllers.Posts
                 Title = request.Title,
                 Content = request.Content,
                 AuthorId = userId,
-                TopicForStoryId = story.Id,
+                PostForStoryId = story.Id,
                 IsTopic = true
             };
 

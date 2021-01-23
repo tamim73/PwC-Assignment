@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Context.Migrations
 {
     [DbContext(typeof(AssignmentDbContext))]
-    [Migration("20210122164111_i")]
+    [Migration("20210123114310_i")]
     partial class i
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,9 +56,9 @@ namespace API.Context.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDateTime = new DateTime(2021, 1, 22, 18, 41, 10, 998, DateTimeKind.Local).AddTicks(3834),
+                            CreationDateTime = new DateTime(2021, 1, 23, 13, 43, 10, 360, DateTimeKind.Local).AddTicks(4265),
                             Name = "System Administrator",
-                            Password = "7X+n5MaAc0iBmmbis0q/TC4Ji019t+04rHyMveqyGqLuxD6s",
+                            Password = "xFK+xtwJ1HCQCerZrGbEp4h+ZSrsKyRTCgJBpl2LKF0eTfX1",
                             Role = "Admin",
                             Username = "sysadmin"
                         });
