@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { IBatchRequest } from 'src/app/core/Models';
 import { environment } from 'src/environments/environment';
 import {
@@ -28,7 +27,7 @@ interface State {
 @Injectable({
   providedIn: 'root',
 })
-export class StoriesService implements CanActivate {
+export class StoriesService {
   constructor(private http: HttpClient, private router: Router) {}
 
   private storyEndPoint = environment.apiURL + '/stories';
@@ -53,47 +52,11 @@ export class StoriesService implements CanActivate {
     return this._state.value;
   }
 
-  goHome(): void {
-    this.router.navigate(['/']);
-  }
 
-  clearSelectedStory(): void {
-    this._state.next({
-      ...this.state,
-      selectedStory: null,
-    });
-  }
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    if (this.state.selectedStory) {
-      return of(true);
-    }
-    const id = +route.paramMap.get('id');
-    console.log(id);
-    
-    if (id) {
-      return this.getStory$(id).pipe(
-        map(
-          (story) => {
-            console.log(story);
-            
-            this._state.next({
-              ...this.state,
-              selectedStory: story,
-            });
-            return true;
-          },
-          (err: any) => {
-            console.log('error >> canActivate', err);
-            this.goHome();
-            return false;
-          }
-        )
-      );
-    }
-    this.goHome();
-    return of(false);
-  }
+
+
+
 
   /* -------------------------------------------------------------------------- */
   /*                                   Actions                                  */
@@ -114,6 +77,9 @@ export class StoriesService implements CanActivate {
         ...this.state,
         selectedStory: res,
       });
+      console.log(res);
+      
+      this.router.navigate(['/stories/view/' + id]);
     });
   }
 

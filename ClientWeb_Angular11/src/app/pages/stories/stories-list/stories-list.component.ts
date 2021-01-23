@@ -14,4 +14,7 @@ export class StoriesListComponent implements OnInit {
   ngOnInit(): void {
     this.storiesService.getAllStories();
   }
+  go() {
+    this.storiesService.getStory(1);
+  }
 }

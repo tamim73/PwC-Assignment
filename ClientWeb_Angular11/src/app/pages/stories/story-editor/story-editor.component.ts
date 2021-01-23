@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { StoriesService } from '../stories.service';
 
 @Component({
   selector: 'app-story-editor',
@@ -7,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./story-editor.component.scss'],
 })
 export class StoryEditorComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private storiesService: StoriesService) {}
   editorOptions = {
     height: 500,
     menubar: false,
@@ -28,7 +29,9 @@ export class StoryEditorComponent implements OnInit {
     content: ['', []],
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.storiesService.getStory(1);
+  }
 
   save(): void {
     console.log(this.storyFG.value);  

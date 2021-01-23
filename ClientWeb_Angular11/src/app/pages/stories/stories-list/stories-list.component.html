@@ -39,7 +39,10 @@
                 </p>
             </mat-card-content>
             <mat-card-actions>
-                <a mat-button [routerLink]="[ './' + (story.id || 0) ]">Read more</a>
+                <!-- <a mat-button [routerLink]="[ './view/' + (story.id || 0) ]">Read more</a> -->
+                <!-- <a mat-button [routerLink]="[ './edit']">Read more</a> -->
+                <!-- <a mat-button [routerLink]="[ './edit' ]">Read more</a> -->
+                <button mat-button (click)="go()">Read more</button>
             </mat-card-actions>
         </mat-card>
 

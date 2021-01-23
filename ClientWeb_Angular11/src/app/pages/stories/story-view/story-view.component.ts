@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 import { StoriesService } from '../stories.service';
 
 @Component({
@@ -6,16 +8,25 @@ import { StoriesService } from '../stories.service';
   templateUrl: './story-view.component.html',
   styleUrls: ['./story-view.component.scss'],
 })
-export class StoryViewComponent implements OnInit, OnDestroy {
+export class StoryViewComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
-    private storiesService: StoriesService
+    private storiesService: StoriesService,
+    private route: ActivatedRoute
   ) {}
 
+  id = 0;
   ngOnInit(): void {
-    console.log('StoryViewComponent');
+    // this.id = +this.route.snapshot.paramMap.get('id');
+    // console.log(this.id);
   }
 
-  ngOnDestroy(): void {
-    this.storiesService.clearSelectedStory();
+  ngAfterViewInit() {
+    // this.storiesService.getStory$(1).subscribe((res) => {
+    //   console.log(res);
+    // });
   }
+
+ 
+
+  ngOnDestroy(): void {}
 }
