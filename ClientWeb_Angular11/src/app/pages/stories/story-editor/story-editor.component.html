@@ -1,0 +1,57 @@
+<h1 class="border-bottom">Story Editor</h1>
+<form class="fs-1"
+      (ngSubmit)="save()"
+      [formGroup]="storyFG">
+
+    <!-- -------------------------------- Title -------------------------------- -->
+
+    <mat-label>Title
+        <span class="text-danger">*</span>
+    </mat-label>
+    <mat-form-field appearance="outline" class="w-100 py-3">
+
+        <input matInput
+               [placeholder]="'Enter the story title'"
+               [formControlName]="'title'"
+               [type]="'text'">
+        <mat-error>Required</mat-error>
+    </mat-form-field>
+
+    <!-- ----------------------------- Description ----------------------------- -->
+
+    <mat-label>Description
+        <span class="text-danger">*</span>
+    </mat-label>
+    <mat-form-field appearance="outline" class="w-100 py-3">
+        <textarea matInput
+                  cdkTextareaAutosize
+                  rows="5"
+                  style="overflow: hidden;"
+                  [placeholder]="'Enter the story description'"
+                  [formControlName]="'description'">
+                </textarea>
+        <mat-error>Required</mat-error>
+    </mat-form-field>
+
+    <!-- ------------------------------- Content ------------------------------- -->
+
+    <mat-label>Content
+        <span class="text-danger">*</span>
+    </mat-label>
+    <editor style="margin-top: 20px;"
+            [init]="editorOptions"
+            [inline]="false"
+            [formControlName]="'content'">
+    </editor>
+
+    <!-- ------------------------------- Actions ------------------------------- -->
+    <div class="d-flex flex-wrap justify-content-center justify-content-md-center mb-4">
+        <button mat-stroked-button
+                class="my-4 p-4"
+                style="min-width: 250px;"
+                color="primary"
+                type="submit">
+            Save
+        </button>
+    </div>
+</form>

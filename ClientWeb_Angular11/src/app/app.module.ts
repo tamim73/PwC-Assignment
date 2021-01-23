@@ -23,13 +23,24 @@ import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatDividerModule} from '@angular/material/divider';
+
+// tinymce
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoryEditorComponent } from './pages/stories/story-editor/story-editor.component';
+import { StoryViewComponent } from './pages/stories/story-view/story-view.component';
+import { PostComponent } from './core/components/post/post.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PagesComponent,
-    StoriesListComponent
+    StoriesListComponent,
+    StoryEditorComponent,
+    StoryViewComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +49,8 @@ import { MatInputModule } from '@angular/material/input';
     HttpClientModule,
     LoadingBarModule,
     LoadingBarRouterModule,
+    EditorModule,
+    ReactiveFormsModule,
 
     MatToolbarModule,
     MatProgressBarModule,
@@ -49,6 +62,7 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDividerModule
   ],
   providers: [
     {

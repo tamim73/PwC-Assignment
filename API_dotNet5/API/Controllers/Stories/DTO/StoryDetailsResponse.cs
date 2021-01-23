@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers.Stories
 {
-    public class StoryDetailsRespone: StoryPostItem
+    public class StoryDetailsResponse: StoryPostItem
     {
         public List<StoryPostItem> Posts { get; set; }
     }

@@ -63,7 +63,7 @@ namespace API.Controllers.Stories
         // GET api/<StoriesController>/5
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<StoryDetailsRespone>> Get(int id)
+        public async Task<ActionResult<StoryDetailsResponse>> Get(int id)
         {
             var story = await dbContext.Stories
                 .Include(x => x.Topic).ThenInclude(x => x.Author)
@@ -75,7 +75,7 @@ namespace API.Controllers.Stories
                 return NotFound();
             }
 
-            return new StoryDetailsRespone
+            return new StoryDetailsResponse
             {
                 Id = story.Id,
                 Title = story.Topic.Title,
