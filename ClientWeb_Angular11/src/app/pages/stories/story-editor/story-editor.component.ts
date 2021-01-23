@@ -25,9 +25,9 @@ export class StoryEditorComponent implements OnInit {
    */
   @Input() storyId: number;
   /** if not passed will check for storyId */
-  @Input() type: 'story' | 'post';
+  @Input() type: 'story' | 'post' = 'story';
   /** add for story and post, edit only for post */
-  @Input() mode: 'add' | 'edit';
+  @Input() mode: 'add' | 'edit' = 'add';
 
   @Output() submitted = new EventEmitter();
 

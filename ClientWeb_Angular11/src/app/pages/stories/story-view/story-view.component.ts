@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { StoriesService } from '../stories.service';
 
 @Component({
@@ -11,12 +12,13 @@ import { StoriesService } from '../stories.service';
 export class StoryViewComponent implements OnInit, OnDestroy {
   constructor(
     private storiesService: StoriesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService,
   ) {}
 
   id = +this.route.snapshot.paramMap.get('id');
   state$ = this.storiesService.state$;
-
+  isLoggedIn = this.authService.isLoggedIn();
   isAddPostToStoryVisible = false;
 
   ngOnInit(): void {

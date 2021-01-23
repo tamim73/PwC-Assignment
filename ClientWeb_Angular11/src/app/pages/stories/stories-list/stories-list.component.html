@@ -13,7 +13,7 @@
 <!--                                 Actions                                 -->
 <!-- ----------------------------------------------------------------------- -->
 
-<div class="d-flex flex-wrap justify-content-center justify-content-md-end mb-4 px-5">
+<div *ngIf="isLoggedIn" class="d-flex flex-wrap justify-content-center justify-content-md-end mb-4 px-5">
     <button mat-button [routerLink]="'./add'" class="mx-2" color="primary">
         <i class="material-icons mr-2 py-2">
             add
