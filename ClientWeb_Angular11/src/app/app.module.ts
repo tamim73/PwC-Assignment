@@ -14,6 +14,9 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { ErrorInterceptorService } from './core/services/error-interceptor.service';
 import { PostComponent } from './core/components/post/post.component';
 import {MatChipsModule} from '@angular/material/chips';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 
 @NgModule({
@@ -26,6 +29,10 @@ import {MatChipsModule} from '@angular/material/chips';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
+    LoadingBarModule,
+    LoadingBarRouterModule,
+    LoadingBarHttpClientModule,
 
     MatToolbarModule,
     MatProgressBarModule,
