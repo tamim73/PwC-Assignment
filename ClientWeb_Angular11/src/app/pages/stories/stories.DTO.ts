@@ -30,6 +30,7 @@ export interface SearchStoriesResponse extends IBaseResponse {
   count: number;
 }
 export interface StoryDetailsResponse extends IBaseResponse, IPostBase {
+  storyId: number;
   posts: IPostBase[];
 }
 

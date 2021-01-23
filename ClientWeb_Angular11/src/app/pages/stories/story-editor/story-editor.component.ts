@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import {
   AddPostRequest,
   AddStoryRequest,
@@ -17,7 +16,6 @@ export class StoryEditorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private storiesService: StoriesService,
-    private route: ActivatedRoute
   ) {}
 
   /** needed if edit mode */
@@ -55,14 +53,7 @@ export class StoryEditorComponent implements OnInit {
     content: ['', []],
   });
 
-  id = +this.route.snapshot.paramMap.get('id');
   ngOnInit(): void {
-    if (!this.type) {
-      this.type = this.storyId ? 'post' : 'story';
-    }
-    if (!this.mode) {
-      this.mode = this.id ? 'edit' : 'add';
-    }
     if (this.mode === 'edit') {
       this.storiesService.getPost$(this.postId).subscribe((res) => {
         this.storyFG.patchValue({

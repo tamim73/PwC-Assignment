@@ -97,7 +97,8 @@ namespace API.Controllers.Stories
 
             var response = new StoryDetailsResponse
             {
-                Id = story.Id,
+                StoryId = story.Id,
+                Id = story.Topic.Id,
                 Title = story.Topic.Title,
                 Description = story.Topic.Description,
                 Content = story.Topic.Content,
@@ -128,6 +129,7 @@ namespace API.Controllers.Stories
 
             Story story = new Story()
             {
+
                 Topic = new Post
                 {
                     Title = request.Title.Trim(),

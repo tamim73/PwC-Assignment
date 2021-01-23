@@ -7,6 +7,7 @@ namespace API.Controllers.Stories
 {
     public class StoryDetailsResponse: StoryPostItem
     {
+        public int StoryId { get; set; }
         public List<StoryPostItem> Posts { get; set; }
     }
 

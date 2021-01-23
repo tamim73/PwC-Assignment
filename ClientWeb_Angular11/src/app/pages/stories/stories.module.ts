@@ -29,10 +29,6 @@ const routes: Routes = [
     component: StoryEditorComponent,
   },
   {
-    path: 'edit/:id',
-    component: StoryEditorComponent,
-  },
-  {
     path: 'view/:id',
     component: StoryViewComponent,
   },
