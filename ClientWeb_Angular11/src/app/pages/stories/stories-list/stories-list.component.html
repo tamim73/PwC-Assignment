@@ -32,7 +32,7 @@
         <mat-card *ngFor="let story of state.storiesList; index as i" class="story-card mat-elevation-z0 border">
             <mat-card-header>
                 <mat-card-title>{{story.title}}</mat-card-title>
-                <mat-card-subtitle>By {{story.authorName}} <br> {{story.creationDateTime | date}}</mat-card-subtitle>
+                <mat-card-subtitle>By {{story.authorName}} <br> {{story.creationDateTime | dateAgo}}</mat-card-subtitle>
             </mat-card-header>
             <img mat-card-image [src]="'https://picsum.photos/' + (300 + i) + '/' + (200 - i)" alt="Demo image">
             <mat-card-content>

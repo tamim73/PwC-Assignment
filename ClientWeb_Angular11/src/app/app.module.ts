@@ -17,12 +17,13 @@ import {MatChipsModule} from '@angular/material/chips';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { DateAgoPipe } from './core/pipes/date-ago.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostComponent
+    PostComponent,
   ],
   imports: [
     BrowserModule,

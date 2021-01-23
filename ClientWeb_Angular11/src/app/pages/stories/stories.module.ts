@@ -18,6 +18,7 @@ import { StoriesListComponent } from './stories-list/stories-list.component';
 import { StoryEditorComponent } from './story-editor/story-editor.component';
 import { StoryViewComponent } from './story-view/story-view.component';
 import { PostComponent } from './components/post/post.component';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -45,13 +46,14 @@ const routes: Routes = [
     StoryEditorComponent,
     StoryViewComponent,
     PostComponent,
+    
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     EditorModule,
-
+    PipesModule,
     MatToolbarModule,
     MatProgressBarModule,
     MatButtonModule,

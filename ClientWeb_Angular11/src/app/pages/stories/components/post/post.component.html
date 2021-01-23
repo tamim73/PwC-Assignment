@@ -28,7 +28,7 @@
                     {{post.title | titlecase}}
                 </h1>
             </mat-card-title>
-            <mat-card-subtitle>By {{post.authorName}} <br> {{post.creationDateTime | date}}</mat-card-subtitle>
+            <mat-card-subtitle>By {{post.authorName}} <br> {{post.creationDateTime }}</mat-card-subtitle>
         </mat-card-header>
         <img *ngIf="isTopic" mat-card-image [src]="'https://picsum.photos/800/300'" alt="Demo image">
         <mat-card-content>
