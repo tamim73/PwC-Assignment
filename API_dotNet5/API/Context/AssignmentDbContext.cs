@@ -27,7 +27,7 @@ namespace API.Context
             modelBuilder.Entity<Story>()
                 .HasOne(x => x.Topic)
                 .WithOne(x=> x.TopicForStory)
-                .HasForeignKey<Story>(x => x.TopicId);
+                .HasForeignKey<Post>(x => x.TopicForStoryId);
 
             modelBuilder.Entity<Post>()
                .HasOne<Story>(x => x.PostForStory)
