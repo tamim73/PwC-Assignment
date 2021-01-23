@@ -17,8 +17,6 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { ErrorInterceptorService } from './core/services/error-interceptor.service';
 import { PagesComponent } from './pages/pages.component';
 import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -48,9 +46,6 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    LoadingBarModule,
-    LoadingBarRouterModule,
-    LoadingBarHttpClientModule,
     EditorModule,
     ReactiveFormsModule,
 

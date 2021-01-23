@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   constructor(
-    public loader: LoadingBarService,
     private router: Router,
     private authService: AuthService
   ) {}
