@@ -172,7 +172,7 @@ namespace API.Controllers.Stories
             if (story == null) return NotFound(new DeleteStoryResponse { Message = "Story does not exist", HasError = true });
 
             // if user is not the story author or the user is not an admin
-            if (story.Topic.AuthorId != userId || userRole != UserRole.Admin)
+            if (story.Topic.AuthorId != userId && userRole != UserRole.Admin)
                 return Unauthorized(new DeleteStoryResponse { Message = "You do no t have permissions to delete this story", HasError = true });
 
             try

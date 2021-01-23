@@ -101,12 +101,12 @@ namespace API.Controllers.Posts
             if (post == null) return NotFound(new EditPostResponse { Message = "Post does not exist", HasError = true });
 
             // if user is not the post author or the user is not an admin
-            if (post.AuthorId != userId || userRole != UserRole.Admin)
+            if (post.AuthorId != userId && userRole != UserRole.Admin)
                 return Unauthorized(new EditPostResponse { Message = "You do no t have permissions to edit this post", HasError = true });
 
-            post.Title = request.Title.Trim();
-            post.Description = request.Description.Trim();
-            post.Content = request.Content;
+            if (!string.IsNullOrWhiteSpace(request.Title))  post.Title = request.Title.Trim();
+            if(!string.IsNullOrWhiteSpace(request.Description)) post.Description = request.Description.Trim();
+            if (!string.IsNullOrWhiteSpace(request.Content)) post.Content = request.Content;
 
             try
             {
@@ -134,7 +134,7 @@ namespace API.Controllers.Posts
             if (post == null) return NotFound(new DeletePostResponse { Message = "Post does not exist", HasError = true });
 
             // if user is not the story author or the user is not an admin
-            if (post.AuthorId != userId || userRole != UserRole.Admin)
+            if (post.AuthorId != userId && userRole != UserRole.Admin)
                 return Unauthorized(new DeletePostResponse { Message = "You do no t have permissions to delete this post", HasError = true });
 
             if (post.TopicForStoryId != null || post.IsTopic)

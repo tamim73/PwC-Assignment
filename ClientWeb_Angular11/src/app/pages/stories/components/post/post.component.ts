@@ -18,10 +18,11 @@ export class PostComponent implements OnInit {
   @Input() isTopic: boolean;
 
   isEditing = false;
-  canEdit = this.checkCanEdit();
+  canEdit: boolean;
 
   ngOnInit(): void {
     console.log(this.post);
+    this.canEdit = this.checkCanEdit();
   }
 
   showEditor(): void {
@@ -47,9 +48,11 @@ export class PostComponent implements OnInit {
   }
 
   checkCanEdit(): boolean {
+    console.log(this.authService.isAdmin(), this.authService.getUserId(), this.post?.authorId);
+
     return (
       this.authService.isAdmin() ||
-      this.authService.getUserId() === this.post.authorId
+      this.authService.getUserId() === this.post?.authorId
     );
   }
 }
