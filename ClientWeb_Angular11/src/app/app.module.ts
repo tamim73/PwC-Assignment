@@ -31,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoryEditorComponent } from './pages/stories/story-editor/story-editor.component';
 import { StoryViewComponent } from './pages/stories/story-view/story-view.component';
 import { PostComponent } from './core/components/post/post.component';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { PostComponent } from './core/components/post/post.component';
     HttpClientModule,
     LoadingBarModule,
     LoadingBarRouterModule,
+    LoadingBarHttpClientModule,
     EditorModule,
     ReactiveFormsModule,
 
