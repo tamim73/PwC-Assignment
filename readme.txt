@@ -21,6 +21,7 @@ API:
 -Ensure the database is created, if not select the Web project and run 'update-database' command in NuGet Package Manager Console 
 
 Web app (Angular):
+-make sure to install npm packages using `npm i` inside the angular project
 -modify the apiURl in 'environment.ts' to match the running API, default is 'https://localhost:5001/api'
 -Open a terminal in the project folder then run 'ng s -o'
 -Make sure the api is running with the url that is configured is angular environment.ts
