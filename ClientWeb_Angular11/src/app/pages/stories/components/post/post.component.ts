@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { IPostBase } from '../../stories.DTO';
+import { IPostBase, StoryDetailsResponse } from '../../stories.DTO';
 import { StoriesService } from '../../stories.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class PostComponent implements OnInit {
     private storiesService: StoriesService
   ) {}
 
-  @Input() post: IPostBase;
+  @Input() post: IPostBase | StoryDetailsResponse;
   @Input() isTopic: boolean;
 
   isEditing = false;
@@ -39,9 +39,9 @@ export class PostComponent implements OnInit {
     if (this.canEdit) {
       if (confirm('Are you sure you ?')) {
         if (this.isTopic) {
-          this.storiesService.deleteStory(this.post.id);
+          this.storiesService.deleteStory((this.post as StoryDetailsResponse).storyId);
         } else {
-          this.storiesService.deletePost(this.post.id);
+          this.storiesService.deletePost((this.post as IPostBase).id);
         }
       }
     }

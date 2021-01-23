@@ -137,7 +137,7 @@ namespace API.Controllers.Posts
             if (post.AuthorId != userId && userRole != UserRole.Admin)
                 return Unauthorized(new DeletePostResponse { Message = "You do no t have permissions to delete this post", HasError = true });
 
-            if (post.TopicForStoryId != null || post.IsTopic)
+            if (post.TopicForStoryId != null)
                 return BadRequest(new DeletePostResponse { Message = "This post is a story topic, you must delete the story first", HasError = true });
 
             try

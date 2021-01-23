@@ -128,11 +128,12 @@ export class StoriesService {
   deleteStory(id: number): void {
     this.deleteStory$(id).subscribe((res) => {
       // ...
+      this.router.navigate(['/pages/stories']);
     });
   }
 
   refreshSelectedStory(): void {
-    this.getStory(this.state?.selectedStory?.id);
+    this.getStory(this.state?.selectedStory?.storyId);
   }
   /* ---------------------------------- posts --------------------------------- */
 
@@ -157,6 +158,7 @@ export class StoriesService {
   deletePost(id: number): void {
     this.deletePost$(id).subscribe((res) => {
       // ...
+      this.refreshSelectedStory();
     });
   }
 
