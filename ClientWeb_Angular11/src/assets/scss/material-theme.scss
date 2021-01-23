@@ -12,10 +12,10 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $PwC-Assignment-Client-Web-primary: mat-palette($mat-deep-orange);
-$PwC-Assignment-Client-Web-accent: mat-palette($mat-pink, A200, A100, A400);
+$PwC-Assignment-Client-Web-accent: mat-palette($mat-orange, A400);
 
 // The warn palette is optional (defaults to red).
-$PwC-Assignment-Client-Web-warn: mat-palette($mat-red);
+$PwC-Assignment-Client-Web-warn: mat-palette($mat-red, A700);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
