@@ -54,18 +54,18 @@ namespace API.Context.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDateTime = new DateTime(2021, 1, 23, 21, 45, 26, 478, DateTimeKind.Local).AddTicks(5119),
+                            CreationDateTime = new DateTime(2021, 1, 23, 22, 10, 3, 850, DateTimeKind.Local).AddTicks(2020),
                             Name = "System Administrator",
-                            Password = "WxgDYWImTc0gGOyf2pFZL65Jr8QGlVAwk7ZVAWK+/9kR408G",
+                            Password = "Y2fXqCbtOLhsrENFaMYVWP5ryaRHl7tN9Sr/E5CCeL6O6XfM",
                             Role = "Admin",
                             Username = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            CreationDateTime = new DateTime(2021, 1, 23, 21, 45, 26, 494, DateTimeKind.Local).AddTicks(1558),
+                            CreationDateTime = new DateTime(2021, 1, 23, 22, 10, 3, 866, DateTimeKind.Local).AddTicks(423),
                             Name = "Mr.Writer",
-                            Password = "/MkO5ffEZqw/ZWDhQacfplXskVhhXIjctXKlYd2BzZufwGsn",
+                            Password = "uYH1JZVcO1qkInvJtw/CmKvOcWtXLlt1nso9dPFEaOOaX98A",
                             Role = "Writer",
                             Username = "writer"
                         });
@@ -110,6 +110,10 @@ namespace API.Context.Migrations
 
                     b.HasIndex("PostForStoryId");
 
+                    b.HasIndex("TopicForStoryId")
+                        .IsUnique()
+                        .HasFilter("[TopicForStoryId] IS NOT NULL");
+
                     b.ToTable("Posts");
                 });
 
@@ -123,13 +127,7 @@ namespace API.Context.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TopicId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TopicId")
-                        .IsUnique();
 
                     b.ToTable("Stories");
                 });
@@ -146,30 +144,22 @@ namespace API.Context.Migrations
                         .WithMany("Posts")
                         .HasForeignKey("PostForStoryId");
 
+                    b.HasOne("Lib.Entites.Story", "TopicForStory")
+                        .WithOne("Topic")
+                        .HasForeignKey("Lib.Entites.Post", "TopicForStoryId");
+
                     b.Navigation("Author");
 
                     b.Navigation("PostForStory");
-                });
 
-            modelBuilder.Entity("Lib.Entites.Story", b =>
-                {
-                    b.HasOne("Lib.Entites.Post", "Topic")
-                        .WithOne("TopicForStory")
-                        .HasForeignKey("Lib.Entites.Story", "TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Topic");
-                });
-
-            modelBuilder.Entity("Lib.Entites.Post", b =>
-                {
                     b.Navigation("TopicForStory");
                 });
 
             modelBuilder.Entity("Lib.Entites.Story", b =>
                 {
                     b.Navigation("Posts");
+
+                    b.Navigation("Topic");
                 });
 #pragma warning restore 612, 618
         }
