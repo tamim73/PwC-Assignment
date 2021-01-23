@@ -5,6 +5,9 @@ interface IStoryBase {
   title: string;
   description: string;
   content: string;
+  creationDateTime: Date;
+  authorName: string;
+  authorId: number;
 }
 
 export interface AddStoryRequest extends IStoryBase {}
@@ -20,8 +23,6 @@ export interface SearchStoriesRequest extends IBatchRequest {
   general: string;
 }
 export interface StoriesListModel extends IStoryBase {
-  authorName: string;
-  creationDateTime: Date;
 }
 
 export interface SearchStoriesResponse extends IBaseResponse {
@@ -29,9 +30,5 @@ export interface SearchStoriesResponse extends IBaseResponse {
   count: number;
 }
 export interface StoryDetailsResponse extends IBaseResponse, IStoryBase {
-  rows: StoriesListModel[];
-  count: number;
-  creationDateTime: Date;
-  authorName: string;
-  authorId: number;
+  Posts: IStoryBase[];
 }

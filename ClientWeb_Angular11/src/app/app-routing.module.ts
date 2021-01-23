@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GuestGuard } from './core/guards/guest.guard';
 import { PagesComponent } from './pages/pages.component';
 import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
+import { StoriesService } from './pages/stories/stories.service';
 import { StoryEditorComponent } from './pages/stories/story-editor/story-editor.component';
 import { StoryViewComponent } from './pages/stories/story-view/story-view.component';
 
@@ -27,11 +28,13 @@ const routes: Routes = [
       },
       {
         path: 'stories/edit/:id',
-        component: StoryEditorComponent
+        component: StoryEditorComponent,
+        canActivate: [StoriesService]
       },
       {
         path: 'stories/:id',
-        component: StoryViewComponent
+        component: StoryViewComponent,
+        canActivate: [StoriesService]
       },
       {
         path: '**',
