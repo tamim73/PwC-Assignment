@@ -10,7 +10,7 @@ Prerequisites:
 To run the app
 ========================
 1) open dist folder
-2) run the api by running API.exe in the API folder
+2) run the api by running API.exe in the API folder, it will use the connection string "Server=.;Database=TamimAssignmentDB;Trusted_Connection=True;"
 3) the web application is in the web folder you can serve it by installing live-server `npm install -g live-server` then run `live-server` command inside the Web folder (avoid refreshing the page when serving with live-server)
 
 To build from source code
