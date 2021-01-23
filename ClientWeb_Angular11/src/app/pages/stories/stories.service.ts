@@ -74,20 +74,17 @@ export class StoriesService {
 
   /* --------------------------------- stories -------------------------------- */
 
-  getAllStories(): void {
-    this._state$.next({ ...this.state, storiesListLoading: true });
-    this.getAllStories$().subscribe((res) => {
+  getAllStories(filterText: string = ''): void {
+    this.getAllStories$(filterText).subscribe((res) => {
       this._state$.next({
         ...this.state,
         storiesList: res,
         storiesListLoading: false,
       });
-      
     });
   }
 
   getStory(id: number, redirect: boolean = true): void {
-    this._state$.next({ ...this.state, selectedStoryLoading: true });
     this.getStory$(id).subscribe((res) => {
       this._state$.next({
         ...this.state,
@@ -168,10 +165,13 @@ export class StoriesService {
 
   /* ---------------------------------- stories --------------------------------- */
 
-  getAllStories$(): Observable<StoriesListModel[]> {
-    return this.http.get<StoriesListModel[]>(this.storiesEndPoint);
+  getAllStories$(filterText: string): Observable<StoriesListModel[]> {
+    return this.http.get<StoriesListModel[]>(this.storiesEndPoint, {
+      params: { general: filterText },
+    });
   }
 
+  // not implemented
   searchStories$(req: SearchStoriesRequest): Observable<SearchStoriesResponse> {
     const params = {
       general: req.sortProperty,

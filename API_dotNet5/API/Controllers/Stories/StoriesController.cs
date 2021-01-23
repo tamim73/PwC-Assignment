@@ -28,16 +28,24 @@ namespace API.Controllers.Stories
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<StoriesListModel>>> GetAll()
+        public async Task<ActionResult<List<StoriesListModel>>> GetAll([FromQuery] SearchStoriesRequest request)
         {
-            List<StoriesListModel> allStories = await dbContext.Stories.Select(story => new StoriesListModel
-            {
-                Id = story.Id,
-                Title = story.Topic.Title,
-                Description = story.Topic.Description,
-                AuthorName = story.Topic.Author.Name,
-                CreationDateTime = story.CreationDateTime
-            })
+            List<StoriesListModel> allStories = await dbContext.Stories
+                .Where(story =>
+                   // general search 
+                   string.IsNullOrEmpty(request.General) ||
+                       story.Topic.Title.Contains(request.General) ||
+                       story.Topic.Description.Contains(request.General) ||
+                       story.Topic.Author.Name.Contains(request.General)
+                   )
+                .Select(story => new StoriesListModel
+                {
+                    Id = story.Id,
+                    Title = story.Topic.Title,
+                    Description = story.Topic.Description,
+                    AuthorName = story.Topic.Author.Name,
+                    CreationDateTime = story.CreationDateTime
+                })
             .ToListAsync();
 
             return Ok(allStories);
