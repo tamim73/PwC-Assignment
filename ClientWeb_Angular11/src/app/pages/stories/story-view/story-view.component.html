@@ -27,6 +27,8 @@
     </div>
     <app-story-editor
                       *ngIf="isAddPostToStoryVisible"
+                      [mode]="'add'"
+                      [type]="'post'"
                       [storyId]="selectedStory.id"
                       (submitted)="hideAddPostToStory()">
     </app-story-editor>

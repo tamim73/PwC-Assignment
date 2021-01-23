@@ -18,20 +18,20 @@
     </mat-form-field>
 
     <!-- ----------------------------- Description ----------------------------- -->
-
-    <mat-label>Description
-        <span class="text-danger">*</span>
-    </mat-label>
-    <mat-form-field appearance="outline" class="w-100 py-3">
-        <textarea matInput
-                  cdkTextareaAutosize
-                  rows="5"
-                  style="overflow: hidden;"
-                  [placeholder]="'Enter the story description'"
-                  [formControlName]="'description'">
+    <ng-container *ngIf="type === 'story'">
+        <mat-label>Description
+        </mat-label>
+        <mat-form-field appearance="outline" class="w-100 py-3">
+            <textarea matInput
+                      cdkTextareaAutosize
+                      rows="5"
+                      style="overflow: hidden;"
+                      [placeholder]="'Enter the story description'"
+                      [formControlName]="'description'">
                 </textarea>
-        <mat-error>Required</mat-error>
-    </mat-form-field>
+            <mat-error>Required</mat-error>
+        </mat-form-field>
+    </ng-container>
 
     <!-- ------------------------------- Content ------------------------------- -->
 

@@ -2,8 +2,13 @@
 <mat-card class="post ">
 
     <ng-container *ngIf="isEditing; else elseTemplate">
-        <app-story-editor [type]="isTopic ? 'story': 'post'"></app-story-editor>
-        <button mat-button color="accent" (click)="cancelEdit()">
+        <app-story-editor
+                          [type]="isTopic ? 'story': 'post'"
+                          [mode]="'edit'"
+                          [postId]="post.id"
+                          (submitted)="hideEditor()">
+        </app-story-editor>
+        <button mat-button color="accent" (click)="hideEditor()">
             Cancel edit
         </button>
     </ng-container>
@@ -18,17 +23,17 @@
             <p>
                 {{post.description}}
             </p>
-    
+
             <div class="post-content" [innerHTML]="post.content"></div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button color="accent" (click)="edit()">
+            <button mat-button color="accent" (click)="showEditor()">
                 Edit
             </button>
             <button mat-button color="warn" (click)="delete()">
                 Delete
             </button>
         </mat-card-actions>
-    </ng-template>  
-  
+    </ng-template>
+
 </mat-card>

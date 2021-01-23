@@ -24,13 +24,13 @@ export class PostComponent implements OnInit {
     console.log(this.post);
   }
 
-  edit(): void {
+  showEditor(): void {
     if (this.canEdit) {
       this.isEditing = true;
     }
   }
 
-  cancelEdit(): void {
+  hideEditor(): void {
     this.isEditing = false;
   }
 

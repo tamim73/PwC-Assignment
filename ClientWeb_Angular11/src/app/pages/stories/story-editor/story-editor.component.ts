@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AddPostRequest, AddStoryRequest, EditPostRequest } from '../stories.DTO';
+import {
+  AddPostRequest,
+  AddStoryRequest,
+  EditPostRequest,
+} from '../stories.DTO';
 import { StoriesService } from '../stories.service';
 
 @Component({
@@ -16,8 +20,15 @@ export class StoryEditorComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  /** needed if edit mode */
+  @Input() postId: number;
+  /** needed when adding a post to existing story
+   *  when (type = post and mode = add)
+   */
   @Input() storyId: number;
+  /** if not passed will check for storyId */
   @Input() type: 'story' | 'post';
+  /** add for story and post, edit only for post */
   @Input() mode: 'add' | 'edit';
 
   @Output() submitted = new EventEmitter();
@@ -40,7 +51,7 @@ export class StoryEditorComponent implements OnInit {
   storyFG = this.fb.group({
     id: [''],
     title: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    description: ['', []],
     content: ['', []],
   });
 
@@ -53,12 +64,12 @@ export class StoryEditorComponent implements OnInit {
       this.mode = this.id ? 'edit' : 'add';
     }
     if (this.mode === 'edit') {
-      this.storiesService.getPost$(this.id).subscribe((res) => {
+      this.storiesService.getPost$(this.postId).subscribe((res) => {
         this.storyFG.patchValue({
           id: res.id,
           title: res.title,
           description: res.description,
-          content: res.content
+          content: res.content,
         });
       });
     }
@@ -71,7 +82,7 @@ export class StoryEditorComponent implements OnInit {
       return;
     }
 
-    const { id, title, description, content  } = this.storyFG.value;
+    const { id, title, description, content } = this.storyFG.value;
 
     if (this.mode === 'add') {
       if (this.type === 'story') {
