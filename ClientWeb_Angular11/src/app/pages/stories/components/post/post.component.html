@@ -1,5 +1,9 @@
 <!-- mat-elevation-z0 border -->
-<mat-card class="post ">
+<mat-card class="post mat-elevation-z0 border">
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  edit                                   -->
+    <!-- ----------------------------------------------------------------------- -->
 
     <ng-container *ngIf="isEditing; else elseTemplate">
         <app-story-editor
@@ -12,19 +16,29 @@
             Cancel edit
         </button>
     </ng-container>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  view                                   -->
+    <!-- ----------------------------------------------------------------------- -->
+
     <ng-template #elseTemplate>
         <mat-card-header>
             <mat-card-title>
-                {{post.title}}
+                <h1 [ngClass]="{'mat-display-3': isTopic}" class="mb-5 mt-3">
+                    {{post.title | titlecase}}
+                </h1>
             </mat-card-title>
             <mat-card-subtitle>By {{post.authorName}} <br> {{post.creationDateTime | date}}</mat-card-subtitle>
         </mat-card-header>
+        <img *ngIf="isTopic" mat-card-image [src]="'https://picsum.photos/800/300'" alt="Demo image">
         <mat-card-content>
-            <p>
-                {{post.description}}
-            </p>
 
-            <div class="post-content" [innerHTML]="post.content"></div>
+            <!-- no need to show description here -->
+            <!-- <p class="">
+                {{post.description}}
+            </p> -->
+
+            <div class="post-content p-md-3" [innerHTML]="post.content"></div>
         </mat-card-content>
         <mat-card-actions *ngIf="canEdit">
             <button mat-button color="accent" (click)="showEditor()">

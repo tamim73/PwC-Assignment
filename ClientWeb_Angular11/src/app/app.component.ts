@@ -22,6 +22,9 @@ export class AppComponent {
   getName(): string {
     return this.authService.loggedInAs();
   }
+  getRole(): string {
+    return this.authService.getUserRole();
+  }
   login() {
     if (this.isLoggedIn()) {
       this.authService.logout();

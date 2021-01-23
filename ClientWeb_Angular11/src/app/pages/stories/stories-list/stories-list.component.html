@@ -14,9 +14,10 @@
 <!-- ----------------------------------------------------------------------- -->
 
 <div class="d-flex flex-wrap justify-content-center justify-content-md-end mb-4 px-5">
-    <button mat-raised-button [routerLink]="'./add'" class="mx-2" color="primary">
+    <button mat-button [routerLink]="'./add'" class="mx-2" color="primary">
         <i class="material-icons mr-2 py-2">
-            add</i>
+            add
+        </i>
         Add Story
     </button>
 </div>
@@ -28,18 +29,19 @@
 <div class="story-cards-wrapper">
     <ng-container *ngIf="state$ | async as state">
 
-        <mat-card *ngFor="let story of state.storiesList" class="story-card">
+        <mat-card *ngFor="let story of state.storiesList; index as i" class="story-card mat-elevation-z0 border">
             <mat-card-header>
                 <mat-card-title>{{story.title}}</mat-card-title>
                 <mat-card-subtitle>By {{story.authorName}} <br> {{story.creationDateTime | date}}</mat-card-subtitle>
             </mat-card-header>
+            <img mat-card-image [src]="'https://picsum.photos/' + (300 + i) + '/' + (200 - i)" alt="Demo image">
             <mat-card-content>
                 <p>
                     {{story.description}}
                 </p>
             </mat-card-content>
             <mat-card-actions>
-                <a mat-button [routerLink]="[ './view/' + (story.id || 0) ]">Read more</a>
+                <a mat-button color="primary" [routerLink]="[ './view/' + (story.id || 0) ]">Read more</a>
             </mat-card-actions>
         </mat-card>
 

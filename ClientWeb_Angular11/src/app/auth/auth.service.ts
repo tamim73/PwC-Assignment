@@ -25,6 +25,7 @@ export class AuthService {
   private _isAdmin = false;
   private _loggedInAs = '';
   private _loggedInId = 0;
+  private _role = '';
 
   private authEndPoint = environment.apiURL + '/auth';
   private loginUrl = this.authEndPoint + '/login';
@@ -58,12 +59,11 @@ export class AuthService {
     }
     const decodedToken = helper.decodeToken(token);
     console.log(decodedToken);
-    this._isAdmin =
+    this._role =
       decodedToken[
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-      ] === 'Admin'
-        ? true
-        : false;
+      ];
+    this._isAdmin = this._role === 'Admin' ? true : false;
     this._loggedInAs =
       decodedToken[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'
@@ -79,6 +79,9 @@ export class AuthService {
 
   getUserId(): number {
     return this._loggedInId;
+  }
+  getUserRole(): string {
+    return this._role;
   }
 
   isAdmin() {

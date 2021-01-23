@@ -12,14 +12,14 @@
     <!--                            add post to story                            -->
     <!-- ----------------------------------------------------------------------- -->
 
-    <div class="d-flex py-5 w-100">
+    <div class="d-flex py-3 mb-3 w-100">
         <ng-container *ngIf="isAddPostToStoryVisible; else elseTemplate">
-            <button (click)="hideAddPostToStory()" mat-stroked-button class="mx-2" color="warn">
+            <button (click)="hideAddPostToStory()" mat-button class="mx-2" color="warn">
                 Cancel adding a post to this stroy
             </button>
         </ng-container>
         <ng-template #elseTemplate>
-            <button (click)="showAddPostToStory()" *ngIf="!isAddPostToStoryVisible" mat-stroked-button class="mx-2"
+            <button (click)="showAddPostToStory()" *ngIf="!isAddPostToStoryVisible" mat-button  class="mx-2"
                     color="primary">
                 Add a post to this story
             </button>
@@ -36,12 +36,13 @@
     <!-- ----------------------------------------------------------------------- -->
     <!--                                  posts                                  -->
     <!-- ----------------------------------------------------------------------- -->
-
+    <h2 class="w-100 px-3">Story posts</h2>
     <ng-container *ngFor="let post of selectedStory.posts">
 
-        <mat-divider></mat-divider>
+        <mat-divider class="mb-4 w-100"></mat-divider>
 
         <app-post [post]="post" [isTopic]="false"></app-post>
 
     </ng-container>
+    <p class="w-100 px-3" *ngIf="!selectedStory?.posts || !selectedStory.posts.length">This story does not have any posts yet</p>
 </ng-container>

@@ -12,8 +12,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { ErrorInterceptorService } from './core/services/error-interceptor.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PostComponent } from './core/components/post/post.component';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -33,6 +33,7 @@ import { PostComponent } from './core/components/post/post.component';
     MatSnackBarModule,
     MatMenuModule,
     MatIconModule,
+    MatChipsModule
     
   ],
   providers: [

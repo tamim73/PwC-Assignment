@@ -13,35 +13,45 @@
 <!--                                 Toolbar                                 -->
 <!-- ----------------------------------------------------------------------- -->
 
-<mat-toolbar class="app-toolbar flex-wrap justify-content-between mat-elevation-z3"
+<mat-toolbar class="app-toolbar flex-wrap justify-content-between mat-elevation-z0 border-bottom"
              style="position: fixed;z-index: 100;">
 
   <!-- ----------------------------- site title ------------------------------ -->
 
-  <div class="pointer mx-3" [routerLink]="[ '']">
+  <div class="d-flex mx-3">
     PwC Assignment
+
+    <!-- -------------------------------- navs --------------------------------- -->
+    <div class="d-none d-md-flex px-4" *ngIf="isLoggedIn()">
+      <a mat-button
+         class="mx-3"
+         color="primary"
+         routerLink="pages/stories">
+        Stories
+      </a>
+    </div>
+
   </div>
 
-  <!-- -------------------------------- navs --------------------------------- -->
 
-  <div class="d-none d-md-flex" *ngIf="isLoggedIn()">
-    <a mat-stroked-button
-       class="mx-3"
-       routerLink="pages/stories">
-      Stories
-    </a>
-  </div>
+  
 
   <!-- -------------------------------- Login -------------------------------- -->
 
   <div class="d-none d-md-flex align-items-center">
     <div *ngIf="isLoggedIn()" class="d-none d-xl-flex">
       <span class="fs-075 text-secondary mr-2">Hi,</span>
-      <span class="fs-075 fw-550 text-muted ">{{getName()}}</span>
+      <span class="fs-1 fw-550 text-muted ">{{getName()}}</span>
+
+      <mat-chip-list class="mx-3" >
+        <mat-chip color="primary" selected>{{getRole()}}</mat-chip>
+      </mat-chip-list>
+
+      <!-- <span class="fs-075 fw-550 text-muted ">ADMIN</span> -->
     </div>
     <a mat-stroked-button
        class="mx-3"
-       color="accent"
+       color="primary"
        (click)="login()">
       {{ isLoggedIn() ? 'Logout' : 'Login' }}
       <i class="material-icons ml-3"

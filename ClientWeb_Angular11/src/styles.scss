@@ -20,3 +20,11 @@ body {
 .mat-toolbar {
     background-color: #fff !important;
 }
+
+.mat-chip {
+    font-size: 12px;
+}
+.mat-standard-chip {
+    min-height: 25px !important;
+    margin-top: 7px !important;
+}
