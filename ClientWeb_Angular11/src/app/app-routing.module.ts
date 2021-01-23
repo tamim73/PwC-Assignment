@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GuestGuard } from './core/guards/guest.guard';
-import { PagesComponent } from './pages/pages.component';
-import { StoriesListComponent } from './pages/stories/stories-list/stories-list.component';
-import { StoryEditorComponent } from './pages/stories/story-editor/story-editor.component';
-import { StoryViewComponent } from './pages/stories/story-view/story-view.component';
 
 const routes: Routes = [
   {
@@ -14,31 +10,13 @@ const routes: Routes = [
     canActivate: [GuestGuard],
   },
   {
-    path: 'stories',
-    component: PagesComponent,
-    children: [
-      {
-        path: '',
-        component: StoriesListComponent,
-      },
-      {
-        path: 'add',
-        component: StoryEditorComponent,
-      },
-      {
-        path: 'edit/:id',
-        component: StoryEditorComponent,
-      },
-      {
-        path: 'view/:id',
-        component: StoryViewComponent,
-      },
-      
-    ],
+    path: 'pages',
+    loadChildren: () =>
+      import('src/app/pages/pages.module').then((m) => m.PagesModule),
   },
   {
-    path: '',
-    redirectTo: 'stories',
+    path: '**',
+    redirectTo: 'pages',
     pathMatch: 'full',
   },
 ];

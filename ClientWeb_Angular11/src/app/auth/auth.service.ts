@@ -88,7 +88,7 @@ export class AuthService {
   getToken(): string | null {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.logout();
+      // this.logout();
     }
     return token;
   }

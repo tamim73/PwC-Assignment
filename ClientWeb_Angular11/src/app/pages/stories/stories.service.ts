@@ -79,7 +79,7 @@ export class StoriesService {
       });
       console.log(res);
       
-      this.router.navigate(['/stories/view/' + id]);
+      // this.router.navigate(['/stories/view/' + id]);
     });
   }
 
