@@ -1,6 +1,7 @@
 ﻿using API.Context;
 using Lib.Entites;
 using Lib.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,7 @@ namespace API.Controllers.Posts
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PostsController : ControllerBase
     {
 
@@ -25,6 +27,26 @@ namespace API.Controllers.Posts
             this.dbContext = dbContext;
         }
 
+
+        // GET api/<PostsController>/5
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<PostDetailsResponse>> Get(int id)
+        {
+            var post = await dbContext.Posts.FindAsync(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new PostDetailsResponse
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Contetnt = post.Content,
+            });
+        }
 
         // POST api/<PostsController>
         [HttpPost]
@@ -67,7 +89,7 @@ namespace API.Controllers.Posts
         {
             if (id != request.Id) return BadRequest(new EditPostResponse { Message = "Id does not match", HasError = true });
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
+
             int.TryParse(User.FindFirst(ClaimTypes.Name).Value, out int userId);
             if (userId == 0) return Unauthorized();
 
@@ -82,6 +104,7 @@ namespace API.Controllers.Posts
                 return Unauthorized(new EditPostResponse { Message = "You do no t have permissions to edit this post", HasError = true });
 
             post.Title = request.Title.Trim();
+            post.Description = request.Description.Trim();
             post.Content = request.Content;
 
             try
@@ -112,6 +135,9 @@ namespace API.Controllers.Posts
             // if user is not the story author or the user is not an admin
             if (post.AuthorId != userId || userRole != UserRole.Admin)
                 return Unauthorized(new DeletePostResponse { Message = "You do no t have permissions to delete this post", HasError = true });
+
+            if (post.TopicForStoryId != null || post.IsTopic)
+                return BadRequest(new DeletePostResponse { Message = "This post is a story topic, you must delete the story first", HasError = true });
 
             try
             {

@@ -8,25 +8,28 @@ import { StoriesService } from '../stories.service';
   templateUrl: './story-view.component.html',
   styleUrls: ['./story-view.component.scss'],
 })
-export class StoryViewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class StoryViewComponent implements OnInit, OnDestroy {
   constructor(
     private storiesService: StoriesService,
     private route: ActivatedRoute
   ) {}
 
-  id = 0;
+  id = +this.route.snapshot.paramMap.get('id');
+  state$ = this.storiesService.state$;
+
+  isAddPostToStoryVisible = false;
+
   ngOnInit(): void {
-    // this.id = +this.route.snapshot.paramMap.get('id');
-    // console.log(this.id);
+    this.storiesService.getStory(this.id);
   }
 
-  ngAfterViewInit() {
-    // this.storiesService.getStory$(1).subscribe((res) => {
-    //   console.log(res);
-    // });
+  showAddPostToStory(): void {
+    this.isAddPostToStoryVisible = true;
   }
 
- 
+  hideAddPostToStory(): void {
+    this.isAddPostToStoryVisible = false;
+  }
 
   ngOnDestroy(): void {}
 }

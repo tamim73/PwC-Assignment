@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { AddPostRequest, AddStoryRequest } from '../stories.DTO';
 import { StoriesService } from '../stories.service';
 
 @Component({
@@ -8,7 +10,17 @@ import { StoriesService } from '../stories.service';
   styleUrls: ['./story-editor.component.scss'],
 })
 export class StoryEditorComponent implements OnInit {
-  constructor(private fb: FormBuilder, private storiesService: StoriesService) {}
+  constructor(
+    private fb: FormBuilder,
+    private storiesService: StoriesService,
+    private route: ActivatedRoute
+  ) {}
+
+  @Input() storyId: number;
+  @Input() type: 'story' | 'post';
+  @Input() mode: 'add' | 'edit';
+
+  // tinymce editor options
   editorOptions = {
     height: 500,
     menubar: false,
@@ -29,11 +41,44 @@ export class StoryEditorComponent implements OnInit {
     content: ['', []],
   });
 
+  id = +this.route.snapshot.paramMap.get('id');
   ngOnInit(): void {
-    this.storiesService.getStory(1);
+    if (!this.type) {
+      this.type = this.storyId ? 'post' : 'post';
+    }
+    if (!this.mode) {
+      this.mode = this.id ? 'edit' : 'add';
+    }
+    if (this.mode === 'edit') {
+      this.storiesService.getStory$(this.id).subscribe((res) => {});
+    }
   }
 
   save(): void {
-    console.log(this.storyFG.value);  
+    console.log(this.storyFG.value);
+
+    if (this.storyFG.invalid) {
+      return;
+    }
+
+    const { title, description, content } = this.storyFG.value;
+
+    if (this.type === 'story') {
+      const req: AddStoryRequest = {
+        title,
+        content,
+        description,
+      };
+      this.storiesService.addStory(req);
+    }
+    if (this.type === 'post') {
+      const req: AddPostRequest = {
+        title,
+        content,
+        description,
+        storyId: this.storyId,
+      };
+      this.storiesService.addPost(req);
+    }
   }
 }

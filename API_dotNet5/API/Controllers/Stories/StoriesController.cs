@@ -95,7 +95,7 @@ namespace API.Controllers.Stories
                 return NotFound();
             }
 
-            return new StoryDetailsResponse
+            var response = new StoryDetailsResponse
             {
                 Id = story.Id,
                 Title = story.Topic.Title,
@@ -114,6 +114,8 @@ namespace API.Controllers.Stories
                     AuthorName = x.Author.Name
                 }).ToList()
             };
+
+            return Ok(response);
         }
 
         // POST api/<StoriesController>
@@ -149,39 +151,9 @@ namespace API.Controllers.Stories
 
         // PUT api/<StoriesController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<EditStoryResponse>> Put(int id, [FromBody] EditStoryRequest request)
+        public async Task<ActionResult<EditStoryResponse>> Put()
         {
-            if (id != request.Id) return BadRequest(new EditStoryResponse { Message = "Id does not match", HasError = true });
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            int.TryParse(User.FindFirst(ClaimTypes.Name).Value, out int userId);
-            if (userId == 0) return Unauthorized();
-
-            string userRole = User.FindFirst(ClaimTypes.Role).Value;
-
-
-            Story story = await dbContext.Stories.Include(x => x.Topic).FirstOrDefaultAsync(x => x.Id == id);
-
-            if (story == null) return NotFound(new EditStoryResponse { Message = "Story does not exist", HasError = true });
-
-            // if user is not the story author or the user is not an admin
-            if (story.Topic.AuthorId != userId || userRole != UserRole.Admin)
-                return Unauthorized(new EditStoryResponse { Message = "You do no t have permissions to edit this story", HasError = true });
-
-            story.Topic.Title = request.Title.Trim();
-            story.Topic.Description = request.Description.Trim();
-            story.Topic.Content = request.Content;
-
-            try
-            {
-                dbContext.Entry(story).State = EntityState.Modified;
-                await dbContext.SaveChangesAsync();
-                return Ok(new EditStoryResponse { Message = "Story updated successfully" });
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
+            return BadRequest(new EditStoryResponse { Message = "Use edit post instead", HasError = true });
         }
 
         // DELETE api/<StoriesController>/5

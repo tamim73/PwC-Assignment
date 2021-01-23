@@ -11,5 +11,7 @@ namespace API.Controllers.Posts
 
         [Required]
         public string Content { get; set; }
+
+        public string Description { get; set; }
     }
 }

@@ -2,13 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { IBatchRequest } from 'src/app/core/Models';
 import { environment } from 'src/environments/environment';
 import {
+  AddPostRequest,
+  AddPostResponse,
   AddStoryRequest,
   AddStoryResponse,
+  DeletePostResponse,
   DeleteStoryResponse,
-  EditStoryRequest,
+  EditPostRequest,
+  EditPostResponse,
   EditStoryResponse,
   SearchStoriesRequest,
   SearchStoriesResponse,
@@ -17,11 +22,19 @@ import {
 } from './stories.DTO';
 
 interface State {
+  // stories list
   storiesList: StoriesListModel[];
-  selectedStory: StoryDetailsResponse;
+  storiesListLoading: boolean;
+
+  // not implemented
+  // TODO
   batch: IBatchRequest;
   count: number;
   general: string;
+
+  // selected story
+  selectedStory: StoryDetailsResponse;
+  selectedStoryLoading: boolean;
 }
 
 @Injectable({
@@ -30,11 +43,14 @@ interface State {
 export class StoriesService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  private storyEndPoint = environment.apiURL + '/stories';
+  private storiesEndPoint = environment.apiURL + '/stories';
+  private postsEndPoint = environment.apiURL + '/posts';
 
   initialState: State = {
     storiesList: [],
+    storiesListLoading: false,
     selectedStory: null,
+    selectedStoryLoading: false,
     batch: {
       pageNo: 1,
       pageSize: 10,
@@ -45,41 +61,47 @@ export class StoriesService {
     general: '',
   };
 
-  private _state = new BehaviorSubject<State>(this.initialState);
-  public state$ = this._state.asObservable();
+  private _state$ = new BehaviorSubject<State>(this.initialState);
+  public state$ = this._state$.asObservable();
 
   private get state(): State {
-    return this._state.value;
+    return this._state$.value;
   }
-
-
-
-
-
-
 
   /* -------------------------------------------------------------------------- */
   /*                                   Actions                                  */
   /* -------------------------------------------------------------------------- */
 
+  /* --------------------------------- stories -------------------------------- */
+
   getAllStories(): void {
+    this._state$.next({ ...this.state, storiesListLoading: true });
     this.getAllStories$().subscribe((res) => {
-      this._state.next({
+      this._state$.next({
         ...this.state,
         storiesList: res,
+        storiesListLoading: false,
       });
     });
   }
 
   getStory(id: number): void {
+    this._state$.next({ ...this.state, selectedStoryLoading: true });
     this.getStory$(id).subscribe((res) => {
-      this._state.next({
+      this._state$.next({
         ...this.state,
         selectedStory: res,
+        selectedStoryLoading: false,
       });
-      console.log(res);
-      
-      // this.router.navigate(['/stories/view/' + id]);
+    });
+  }
+
+  addStory(req: AddStoryRequest, redirect: boolean = true): void {
+    this.addStory$(req).subscribe((res) => {
+      // ...
+      if (redirect) {
+        this.router.navigate(['/pages/stories/view/' + res.storyId]);
+      }
     });
   }
 
@@ -90,7 +112,7 @@ export class StoriesService {
       general,
       ...batch,
     }).subscribe((res) => {
-      this._state.next({
+      this._state$.next({
         ...this.state,
         storiesList: res.rows,
         count: res.count,
@@ -98,12 +120,43 @@ export class StoriesService {
     });
   }
 
+  /* ---------------------------------- posts --------------------------------- */
+
+  getPost(id: number): void {
+    this.getPost$(id).subscribe((res) => {
+      // ...
+    });
+  }
+
+  addPost(req: AddPostRequest, redirect: boolean = true): void {
+    this.addPost$(req).subscribe((res) => {
+      // ...
+      if (redirect) {
+        this.router.navigate(['/pages/stories/view/' + req.storyId]);
+      }
+    });
+  }
+
+  editPost(req: EditPostRequest): void {
+    this.editPost$(req).subscribe((res) => {
+      // ...
+    });
+  }
+
+  deletePost(id: number): void {
+    this.deletePost$(id).subscribe((res) => {
+      // ...
+    });
+  }
+
   /* -------------------------------------------------------------------------- */
   /*                                     API                                    */
   /* -------------------------------------------------------------------------- */
 
+  /* ---------------------------------- stories --------------------------------- */
+
   getAllStories$(): Observable<StoriesListModel[]> {
-    return this.http.get<StoriesListModel[]>(this.storyEndPoint);
+    return this.http.get<StoriesListModel[]>(this.storiesEndPoint);
   }
 
   searchStories$(req: SearchStoriesRequest): Observable<SearchStoriesResponse> {
@@ -115,27 +168,43 @@ export class StoriesService {
       sortProperty: req.sortProperty,
     };
     return this.http.get<SearchStoriesResponse>(
-      this.storyEndPoint + '/search',
+      this.storiesEndPoint + '/search',
       { params }
     );
   }
 
   getStory$(id: number): Observable<StoryDetailsResponse> {
-    return this.http.get<StoryDetailsResponse>(this.storyEndPoint + `/${id}`);
+    return this.http.get<StoryDetailsResponse>(this.storiesEndPoint + `/${id}`);
   }
 
   addStory$(req: AddStoryRequest): Observable<AddStoryResponse> {
-    return this.http.post<AddStoryResponse>(this.storyEndPoint, req);
+    return this.http.post<AddStoryResponse>(this.storiesEndPoint, req);
   }
 
-  editStory$(req: EditStoryRequest): Observable<EditStoryResponse> {
-    return this.http.put<EditStoryResponse>(
-      this.storyEndPoint + `/${req.id}`,
+  deleteStory$(id: number): Observable<DeleteStoryResponse> {
+    return this.http.delete<DeleteStoryResponse>(
+      this.storiesEndPoint + `/${id}`
+    );
+  }
+
+  /* ---------------------------------- posts ---------------------------------- */
+
+  getPost$(id: number): Observable<StoryDetailsResponse> {
+    return this.http.get<StoryDetailsResponse>(this.postsEndPoint + `/${id}`);
+  }
+
+  addPost$(req: AddPostRequest): Observable<AddPostResponse> {
+    return this.http.post<AddPostResponse>(this.postsEndPoint, req);
+  }
+
+  editPost$(req: EditPostRequest): Observable<EditPostResponse> {
+    return this.http.put<EditPostResponse>(
+      this.postsEndPoint + `/${req.id}`,
       req
     );
   }
 
-  deleteStory$(id: number): Observable<DeleteStoryResponse> {
-    return this.http.delete<DeleteStoryResponse>(this.storyEndPoint + `/${id}`);
+  deletePost$(id: number): Observable<DeletePostResponse> {
+    return this.http.delete<DeletePostResponse>(this.postsEndPoint + `/${id}`);
   }
 }

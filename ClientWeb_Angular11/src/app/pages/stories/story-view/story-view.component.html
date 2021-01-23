@@ -1,17 +1,44 @@
-<!-- <ng-container *ngIf="(state$ | async).selectedStory as selectedStory">
-    <h1>{{selectedStory.title}}</h1>
+<ng-container *ngIf="(state$ | async).selectedStory as selectedStory">
 
-    <p>{{selectedStory.description}}</p>
-    
-    <div [innerHTML]="selectedStory.content"></div>
-    
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  story                                  -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <app-post [post]="selectedStory"></app-post>
+
     <mat-divider></mat-divider>
-    
-    <ng-container *ngFor="let item of [1,1,1,1,1]">
-        <app-post></app-post>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                            add post to story                            -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <div class="d-flex py-5 w-100">
+        <ng-container *ngIf="isAddPostToStoryVisible; else elseTemplate">
+            <button (click)="hideAddPostToStory()" mat-stroked-button class="mx-2" color="warn">
+                Cancel adding a post to this stroy
+            </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <button (click)="showAddPostToStory()" *ngIf="!isAddPostToStoryVisible" mat-stroked-button class="mx-2"
+                    color="primary">
+                Add a post to this story
+            </button>
+        </ng-template>
+    </div>
+    <app-story-editor
+                      *ngIf="isAddPostToStoryVisible"
+                      [storyId]="selectedStory.id">
+    </app-story-editor>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  posts                                  -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <ng-container *ngFor="let post of selectedStory.posts">
+
         <mat-divider></mat-divider>
+
+        <app-post [post]="post"></app-post>
+
     </ng-container>
-</ng-container> -->
-
-<p>woerd</p>
-
+</ng-container>

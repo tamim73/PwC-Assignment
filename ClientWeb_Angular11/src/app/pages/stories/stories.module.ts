@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoriesListComponent } from './stories-list/stories-list.component';
 import { StoryEditorComponent } from './story-editor/story-editor.component';
 import { StoryViewComponent } from './story-view/story-view.component';
+import { PostComponent } from './components/post/post.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
     StoriesListComponent,
     StoryEditorComponent,
     StoryViewComponent,
+    PostComponent,
   ],
   imports: [
     CommonModule,

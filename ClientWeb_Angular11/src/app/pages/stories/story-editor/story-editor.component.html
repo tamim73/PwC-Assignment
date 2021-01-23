@@ -1,4 +1,4 @@
-<h1 class="border-bottom">Story Editor</h1>
+<h1 *ngIf="type === 'story'" class="border-bottom pb-3 mb-5">{{mode === 'add' ? 'Add a new story' : 'Edit story'}}</h1>
 <form class="fs-1"
       (ngSubmit)="save()"
       [formGroup]="storyFG">
@@ -51,7 +51,7 @@
                 style="min-width: 250px;"
                 color="primary"
                 type="submit">
-            Save
+            Submit
         </button>
     </div>
 </form>
