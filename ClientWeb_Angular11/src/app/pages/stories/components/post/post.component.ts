@@ -46,7 +46,7 @@ export class PostComponent implements OnInit {
     }
   }
 
-  checkCanEdit(): boolean {
+  checkCanEdit(): boolean {   
     return (
       this.authService.isAdmin() ||
       this.authService.getUserId() === this.post?.authorId

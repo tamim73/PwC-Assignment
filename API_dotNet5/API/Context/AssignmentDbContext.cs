@@ -25,14 +25,14 @@ namespace API.Context
 
 
             modelBuilder.Entity<Story>()
-                .HasOne<Post>(s => s.Topic)
-                .WithOne(g => g.TopicForStory)
-                .HasForeignKey<Post>(s => s.TopicForStoryId);
+                .HasOne(x => x.Topic)
+                .WithOne(x=> x.TopicForStory)
+                .HasForeignKey<Story>(x => x.TopicId);
 
             modelBuilder.Entity<Post>()
-               .HasOne<Story>(s => s.PostForStory)
-               .WithMany(g => g.Posts)
-               .HasForeignKey(s => s.PostForStoryId);
+               .HasOne<Story>(x => x.PostForStory)
+               .WithMany(x => x.Posts)
+               .HasForeignKey(x => x.PostForStoryId);
 
             #region Seeding
             // admin user
@@ -41,10 +41,19 @@ namespace API.Context
                 {
                     Id = 1,
                     Name = "System Administrator",
-                    Username = "sysadmin",
+                    Username = "admin",
                     Password = CryptoHelper.HashPassword("p@ssw0rd"),
                     Role = UserRole.Admin
-                });
+                },
+                new ApplicationUser
+                {
+                    Id = 2,
+                    Name = "Mr.Writer",
+                    Username = "writer",
+                    Password = CryptoHelper.HashPassword("p@ssw0rd"),
+                    Role = UserRole.Writer
+                }
+                );
 
             // Demo 
             #endregion

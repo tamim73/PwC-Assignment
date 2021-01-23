@@ -44,10 +44,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
 
             // Unauthorized
             case 401:
-              this.alertService.showWarning('Unauthorize!');
-              if (confirm('Login might be expired, please login again')) {
-                this.authService.logout();
-              }
+              this.alertService.showWarning('Unauthorize! Login might be expired, please login again');
               break;
 
             // not found

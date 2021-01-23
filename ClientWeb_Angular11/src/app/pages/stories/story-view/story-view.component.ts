@@ -33,5 +33,7 @@ export class StoryViewComponent implements OnInit, OnDestroy {
     this.isAddPostToStoryVisible = false;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.storiesService.clearSelectedStory();
+  }
 }

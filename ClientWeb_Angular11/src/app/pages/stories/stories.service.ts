@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 import { IBatchRequest } from 'src/app/core/Models';
 import { environment } from 'src/environments/environment';
 import {
@@ -131,6 +130,9 @@ export class StoriesService {
 
   refreshSelectedStory(): void {
     this.getStory(this.state?.selectedStory?.storyId);
+  }
+  clearSelectedStory(): void {
+    this._state$.next({...this.state, selectedStory: null});
   }
   /* ---------------------------------- posts --------------------------------- */
 
